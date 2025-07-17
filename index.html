@@ -1,43 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>AR Test</title>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
-    <style>
-      html, body, canvas {
-  background: transparent !important;
-}
-      body, html {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      #overlay {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 10;
-        color: white;
-        background: rgba(0,0,0,0.6);
-        padding: 0.5rem;
-        border-radius: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="overlay">Debug-Modus aktiv</div>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AR-Rätsel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Startscreen -->
+  <div id="start-screen">
+    <h1>Willkommen zum Rätsel</h1>
+    <button id="start-button">Aufgabe starten</button>
+  </div>
 
-    <a-scene
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: true;"
-      vr-mode-ui="enabled: false"
-      renderer="logarithmicDepthBuffer: true;"
-    >
-      <a-camera gps-camera rotation-reader></a-camera>
+  <!-- AR-Bereich (noch leer, wird später befüllt) -->
+  <div id="ar-container" style="display: none;">
+    <!-- UI Elemente werden hier später hinzugefügt -->
+  </div>
 
-      <!-- Dummy-Box zur Kontrolle -->
-      <a-box position="0 0 -2" color="red"></a-box>
-    </a-scene>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>
