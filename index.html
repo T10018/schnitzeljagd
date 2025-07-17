@@ -1,183 +1,40 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR Aufgabe</title>
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      height: 100%;
-      font-family: sans-serif;
-      background-color: #111;
-      color: white;
-      overflow: hidden;
-    }
-
-    .startscreen, .camera-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      z-index: 5;
-      background: #111;
-    }
-
-    button {
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 10px;
-      background-color: #28a745;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-
-    #mitnehmenBtn {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: none;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    .overlay-button {
-      pointer-events: auto;
-      position: absolute;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 0.5rem;
-      border-radius: 10px;
-      color: white;
-      font-size: 1.5rem;
-    }
-
-    #tipBtn {
-      left: 10px;
-      top: 10px;
-    }
-
-    #counter {
-      right: 10px;
-      top: 10px;
-      font-size: 1rem;
-      background: rgba(0, 0, 0, 0.7);
-    }
-
-    #tipBox {
-      position: absolute;
-      top: 60px;
-      left: 10px;
-      background: rgba(0,0,0,0.8);
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      font-size: 1rem;
-      max-width: 250px;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Startscreen -->
-  <div class="startscreen" id="startscreen">
-    <h1>Willkommen</h1>
-    <button id="startBtn">Aufgabe starten</button>
-  </div>
-
-  <!-- A-Frame AR Scene -->
-  <a-scene
-    embedded
-    arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
-    vr-mode-ui="enabled: false"
-    renderer="logarithmicDepthBuffer: true;"
-    style="display: none;"
-    id="arScene"
-  >
-    <!-- Hier kommt später das Modell rein -->
-    <a-camera gps-camera rotation-reader></a-camera>
-  </a-scene>
-
-  <!-- Mitnehmen-Button -->
-  <button id="mitnehmenBtn">Mitnehmen</button>
-
-  <!-- Overlay UI -->
-  <div class="overlay" id="overlay" style="display: none;">
-    <div class="overlay-button" id="tipBtn" title="Tipp anzeigen">💡</div>
-    <div class="overlay-button" id="counter">0 / 3</div>
-    <div id="tipBox">
-      Tipp: Halte die Kamera ruhig und schau dich gut um – manche Objekte sind gut versteckt!
-    </div>
-  </div>
-
-  <script>
-    const startBtn = document.getElementById('startBtn');
-    const startscreen = document.getElementById('startscreen');
-    const arScene = document.getElementById('arScene');
-    const mitnehmenBtn = document.getElementById('mitnehmenBtn');
-    const overlay = document.getElementById('overlay');
-    const tipBtn = document.getElementById('tipBtn');
-    const tipBox = document.getElementById('tipBox');
-    const counter = document.getElementById('counter');
-
-    let itemsCollected = 0;
-    const maxItems = 3;
-
-    // Start-Klick: Szene aktivieren
-    startBtn.addEventListener('click', () => {
-      startscreen.style.display = 'none';
-      arScene.style.display = 'block';
-      overlay.style.display = 'block';
-      mitnehmenBtn.style.display = 'block';
-    });
-
-    // Mitnehmen-Button (Platzhalter)
-    mitnehmenBtn.addEventListener('click', () => {
-      if (itemsCollected < maxItems) {
-        itemsCollected++;
-        counter.textContent = `${itemsCollected} / ${maxItems}`;
+<html>
+  <head>
+    <title>AR Test</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
       }
-
-      if (itemsCollected === maxItems) {
-        mitnehmenBtn.disabled = true;
-        mitnehmenBtn.innerText = "Limit erreicht";
+      #overlay {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+        color: white;
+        background: rgba(0,0,0,0.6);
+        padding: 0.5rem;
+        border-radius: 5px;
       }
-    });
+    </style>
+  </head>
+  <body>
+    <div id="overlay">Debug-Modus aktiv</div>
 
-    // Tipp-Funktion
-    tipBtn.addEventListener('click', () => {
-      tipBox.style.display = tipBox.style.display === 'none' ? 'block' : 'none';
-    });
-  </script>
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: true;"
+      vr-mode-ui="enabled: false"
+      renderer="logarithmicDepthBuffer: true;"
+    >
+      <a-camera gps-camera rotation-reader></a-camera>
 
-</body>
+      <!-- Dummy-Box zur Kontrolle -->
+      <a-box position="0 0 -2" color="red"></a-box>
+    </a-scene>
+  </body>
 </html>
