@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR Startscreen</title>
+  <style>
+    /* Basis-Styling für Vollbildansicht auf Mobilgeräten */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: sans-serif;
+      background-color: #111;
+      color: white;
+    }
+
+    /* Startscreen und Kameraansicht zentriert */
+    .startscreen, .camera-screen {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    /* Standardbutton-Styling */
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Kamera-Vorschau auf voller Fläche */
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Mitnehmen-Button unten zentriert */
+    #mitnehmenBtn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    /* Overlay für Tipp und Counter */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      z-index: 20;
+      pointer-events: none; /* Klicks ignorieren, außer auf Buttons */
+    }
+
+    .overlay-button {
+      pointer-events: auto;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
+      border-radius: 10px;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Glühbirnen-Button: oben links */
+    #tipBtn {
+      left: 10px;
+      top: 10px;
+    }
+
+    /* Counter: oben rechts */
+    #counter {
+      right: 10px;
+      top: 10px;
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Tipp-Fenster unterhalb der Glühbirne */
+    #tipBox {
+      position: absolute;
+      top: 60px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      max-width: 250px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Startbildschirm mit Button zum Aktivieren der Kamera -->
+  <div class="startscreen" id="startscreen">
+    <h1>Willkommen</h1>
+    <button id="startBtn">Aufgabe starten</button>
+  </div>
+
+  <!-- Kameraansicht (wird erst nach Start sichtbar) -->
+  <div class="camera-screen" id="cameraScreen" style="display: none;">
+    <video id="video" autoplay playsinline></video>
+
+    <!-- Button zum „Mitnehmen“ von Objekten -->
+    <button id="mitnehmenBtn" style="display: none;">Mitnehmen</button>
+
+    <!-- Overlay-UI mit Tipp-Button und Zähler -->
+    <div class="overlay" id="overlay" style="display: none;">
+      <div class="overlay-button" id="tipBtn" title="Tipp anzeigen">💡</div>
+      <div class="overlay-button" id="counter">0 / 3</div>
+      <div id="tipBox">
+        Tipp: Halte die Kamera ruhig und schau dich gut um – manche Objekte sind gut versteckt!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Elemente referenzieren
+    const startBtn = document.getElementById('startBtn');
+    const startscreen = document.getElementById('startscreen');
+    const cameraScreen = document.getElementById('cameraScreen');
+    const video = document.getElementById('video');
+    const mitnehmenBtn = document.getElementById('mitnehmenBtn');
+    const overlay = document.getElementById('overlay');
+    const tipBtn = document.getElementById('tipBtn');
+    const tipBox = document.getElementById('tipBox');
+    const counter = document.getElementById('counter');
+
+    let itemsCollected = 0; // Anzahl eingesammelter Objekte
+    const maxItems = 3;     // Maximalzahl
+
+    // Beim Start-Button: Kamera aktivieren und Overlay anzeigen
+    startBtn.addEventListener('click', async () => {
+      startscreen.style.display = 'none';
+      cameraScreen.style.display = 'flex';
+      overlay.style.display = 'block';
+
+      try {
+        // Zugriff auf die Rückkamera
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+          audio: false
+        });
+        video.srcObject = stream;
+        mitnehmenBtn.style.display = 'block'; // Button einblenden
+      } catch (err) {
+        alert('Kamera konnte nicht aktiviert werden: ' + err.message);
+        console.error(err);
+      }
+    });
+
+    // Beispielhafte „Mitnehmen“-Funktionalität
+    mitnehmenBtn.addEventListener('click', () => {
+      // WICHTIG: Diese Logik wird später durch AR-Erkennung ersetzt
+      if (itemsCollected < maxItems) {
+        itemsCollected++;
+        counter.textContent = `${itemsCollected} / ${maxItems}`;
+      }
+
+      if (itemsCollected === maxItems) {
+        mitnehmenBtn.disabled = true;
+        mitnehmenBtn.innerText = "Limit erreicht";
+      }
+    });
+
+    // Tipp-Button ein-/ausblenden
+    tipBtn.addEventListener('click', () => {
+      tipBox.style.display = tipBox.style.display === 'none' ? 'block' : 'none';
+    });
+  </script>
+
+</body>
+</html>
