@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AR-Rätsel</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Startscreen -->
-  <div id="start-screen">
-    <h1>Willkommen zum Rätsel</h1>
-    <button id="start-button">Aufgabe starten</button>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AR Rätsel</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- A-Frame & AR.js (GPS-AR Variante) -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/ar.js@3.4.2/aframe/build/aframe-ar-nft.js"></script>
+  </head>
+  <body>
+    <!-- Startscreen -->
+    <div id="start-screen">
+      <h1>Willkommen zum Rätsel</h1>
+      <button id="start-button">Aufgabe starten</button>
+    </div>
 
-  <!-- AR-Bereich (noch leer, wird später befüllt) -->
-  <div id="ar-container" style="display: none;">
-    <!-- UI Elemente werden hier später hinzugefügt -->
-  </div>
+    <!-- AR Scene (wird beim Start aktiviert) -->
+    <div id="ar-container" style="display: none;">
+      <a-scene
+        embedded
+        vr-mode-ui="enabled: false"
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+      >
+        <!-- Kamera mit GPS Position -->
+        <a-camera gps-camera rotation-reader></a-camera>
 
-  <script src="script.js"></script>
-</body>
+        <!-- Beispielmodell bei fixer Koordinate (wird ersetzt in Schritt 4) -->
+        <a-box 
+          gps-entity-place="latitude: 47.99621654302637; longitude: 14.119687455180562;"
+          material="color: red;" 
+          scale="2 2 2"
+        ></a-box>
+      </a-scene>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
