@@ -1,7 +1,7 @@
-document.getElementById('start-button').addEventListener('click', () => {
-  // Startscreen ausblenden
-  document.getElementById('start-screen').style.display = 'none';
+document.getElementById("startButton").addEventListener("click", () => {
+  document.getElementById("startscreen").classList.add("hidden");
+  document.getElementById("ar-screen").classList.remove("hidden");
 
-  // AR-Container anzeigen
-  document.getElementById('ar-container').style.display = 'block';
+  // Hier starten wir später die AR-Kamera (in Schritt 2)
+  console.log("AR-Ansicht wird geladen...");
 });
