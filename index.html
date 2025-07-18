@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rätsel-Aufgabe</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
 </head>
 <body>
   <!-- Startscreen -->
@@ -13,8 +15,25 @@
     <button id="startButton">Aufgabe starten</button>
   </div>
 
-  <!-- AR-Bereich (noch leer, wird in Schritt 2 gefüllt) -->
+  <!-- AR-Bereich -->
   <div id="ar-screen" class="screen hidden">
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true;"
+    arjs="sourceType: webcam; debugUIEnabled: false;"
+  >
+    <!-- Kamera -->
+    <a-camera gps-camera rotation-reader></a-camera>
+
+    <!-- Test-Marker (wir nutzen Hiro-Marker) -->
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+</div>
     <!-- UI kommt später in Schritt 3 -->
     <div id="ar-container">
       <!-- Hier wird die AR-Kamera eingebettet -->
