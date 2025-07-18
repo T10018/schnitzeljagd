@@ -1,5 +1,5 @@
 // Fix für mobile 100vh-Probleme
-function setViewportHeight() {
+/*function setViewportHeight() {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
@@ -25,3 +25,4 @@ document.getElementById("startButton").addEventListener("click", () => {
 
   document.getElementById("ar-screen").appendChild(scene);
 });
+*/
