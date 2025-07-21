@@ -28,10 +28,28 @@
       vr-mode-ui="enabled: false"
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
-      <!-- Nur Kamera -->
+      <!-- GPS Kamera -->
       <a-camera gps-camera rotation-reader></a-camera>
+      
+      <!-- Modell 1 -->
       <a-entity 
-        gps-entity-place="latitude: 37.99621142936126; longitude: 13.119692309253066"
+        gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
+        gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
+        scale="2 2 2"
+        animation-mixer>
+      </a-entity>
+
+      <!-- Modell 2 -->
+      <a-entity 
+        gps-entity-place="latitude: 47.996500; longitude: 14.119900"
+        gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
+        scale="2 2 2"
+        animation-mixer>
+      </a-entity>
+
+      <!-- Modell 3 -->
+      <a-entity 
+        gps-entity-place="latitude: 47.996800; longitude: 14.120200"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
         animation-mixer>
