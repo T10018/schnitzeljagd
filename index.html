@@ -68,6 +68,21 @@
     </style>
   </head>
   <body>
+    <div id="gpsHint" style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      z-index: 20;
+      font-size: 16px;
+      text-align: center;
+      ">
+      ⏳ Warte auf GPS… Bitte kurz stillhalten
+    </div>
     <div id="hud" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center;">
       <button id="collectBtn">👜 Einsammeln</button>
       <div id="counter">Gefunden: 0 / 3</div>
@@ -114,6 +129,11 @@
       let collected = 0;
       const total = 3;
       
+      const gpsHint = document.getElementById('gpsHint');
+      document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
+        gpsHint.style.display = 'none';
+      });
+
       // Modell-IDs zum Wiedererkennen
       const modelIds = ['model1', 'model2', 'model3'];
       const collectedModels = new Set();
