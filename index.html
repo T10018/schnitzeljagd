@@ -51,6 +51,7 @@
         background-color: white;
       }
 
+      /* TODO Counter fixxen!!!!! */
       /* Counter: oben rechts statt im Button-Container */
       #counter {
         position: fixed;
@@ -88,7 +89,7 @@
         animation-mixer>
       </a-entity>
 
-      <!-- Modell 2 -->
+      <!-- Modell 2
       <a-entity 
         id="model2"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -97,13 +98,14 @@
         animation-mixer>
       </a-entity>
 
-      <!-- Modell 3 -->
+      <-- Modell 3 
       <a-entity 
         id="model3"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
         animation-mixer>
+        -->
       </a-entity>
     </a-scene>
     <script>
@@ -115,11 +117,6 @@
       // Modell-IDs zum Wiedererkennen
       const modelIds = ['model1', 'model2', 'model3'];
       const collectedModels = new Set();
-
-      if (!camPos || !camPos.latitude) {
-        console.log('Warte auf GPS...');
-        return;
-      }
 
       // Einsammel-Button klick
       collectBtn.addEventListener('click', () => {
@@ -136,7 +133,8 @@
           const dist = getDistance(camPos.latitude, camPos.longitude, entityCoords.latitude, entityCoords.longitude);
 
           if (dist < 15) { // Radius: 15 Meter
-            model.parentNode.removeChild(model); // komplett entfernen
+            model.setAttribute('visible', 'false');
+            //model.parentNode.removeChild(model); // komplett entfernen
             collectedModels.add(id);
             collected++;
             counterText.innerText = `Gefunden: ${collected} / ${total}`;
