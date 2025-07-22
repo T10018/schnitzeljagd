@@ -68,20 +68,23 @@
     </style>
   </head>
   <body>
-    <div id="gpsHint" style="
+    <div id="gpsLoading" style="
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.7);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
       color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      z-index: 20;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      font-size: 18px;
+      z-index: 100;
+      font-family: sans-serif;
       ">
-      ⏳ Warte auf GPS… Bitte kurz stillhalten
+      ⏳ GPS wird gesucht… Bitte kurz stillhalten
     </div>
     <div id="hud" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center;">
       <button id="collectBtn">👜 Einsammeln</button>
@@ -128,11 +131,6 @@
       const counterText = document.getElementById('counter');
       let collected = 0;
       const total = 3;
-      
-      const gpsHint = document.getElementById('gpsHint');
-      document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
-        gpsHint.style.display = 'none';
-      });
 
       // Modell-IDs zum Wiedererkennen
       const modelIds = ['model1', 'model2', 'model3'];
@@ -172,6 +170,19 @@
         const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       }
+
+      // GPS-Loading Screen
+      const gpsLoading = document.getElementById('gpsLoading');
+
+      // 1. Sobald Position erkannt → Lade-Screen ausblenden
+      document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
+        if (gpsLoading) gpsLoading.style.display = 'none';
+      });
+
+      // 2. Sicherheits-Timer: Lade-Screen nach 15s ausblenden, auch wenn kein GPS kam
+      setTimeout(() => {
+        if (gpsLoading) gpsLoading.style.display = 'none';
+      }, 15000);
     </script>
   </body>
 </html>
