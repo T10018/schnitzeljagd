@@ -23,6 +23,10 @@
     </style>
   </head>
   <body>
+    <div id="hud" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center;">
+      <button id="collectBtn" style="padding: 12px 24px; font-size: 16px;">👜 Einsammeln</button>
+      <div id="counter" style="margin-top: 8px; color: white;">Gefunden: 0 / 3</div>
+    </div>
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
@@ -33,6 +37,7 @@
       
       <!-- Modell 1 -->
       <a-entity 
+        id="model1"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
@@ -41,7 +46,8 @@
 
       <!-- Modell 2 -->
       <a-entity 
-        gps-entity-place="latitude: 47.996500; longitude: 14.119900"
+        id="model2"
+        gps-entity-place="latitude: 47.99620551900667; longitude: 14.119698441007317"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
         animation-mixer>
@@ -49,11 +55,56 @@
 
       <!-- Modell 3 -->
       <a-entity 
-        gps-entity-place="latitude: 47.996800; longitude: 14.120200"
+        id="model3"
+        gps-entity-place="latitude: 47.996200134366205; longitude: 14.119685029962241"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
         animation-mixer>
       </a-entity>
     </a-scene>
+    <script>
+      const collectBtn = document.getElementById('collectBtn');
+      const counterText = document.getElementById('counter');
+      let collected = 0;
+      const total = 3;
+      
+      // Modell-IDs zum Wiedererkennen
+      const modelIds = ['model1', 'model2', 'model3'];
+      const collectedModels = new Set();
+
+      // Einsammel-Button klick
+      collectBtn.addEventListener('click', () => {
+        const cam = document.querySelector('[gps-camera]');
+        const camPos = cam.components['gps-camera'].currentCoords;
+
+        modelIds.forEach(id => {
+          if (collectedModels.has(id)) return; // schon eingesammelt
+
+          const model = document.getElementById(id);
+          const entityCoords = model.getAttribute('gps-entity-place');
+
+          // Entfernung berechnen
+          const dist = getDistance(camPos.latitude, camPos.longitude, entityCoords.latitude, entityCoords.longitude);
+
+          if (dist < 15) { // Radius: 15 Meter
+            model.setAttribute('visible', 'false');
+            collectedModels.add(id);
+            collected++;
+            counterText.innerText = `Gefunden: ${collected} / ${total}`;
+          }
+        });
+      });
+
+      // Haversine-Formel
+      function getDistance(lat1, lon1, lat2, lon2) {
+        function toRad(x) { return x * Math.PI / 180; }
+        const R = 6371e3; // Erdradius in Meter
+        const φ1 = toRad(lat1), φ2 = toRad(lat2);
+        const Δφ = toRad(lat2 - lat1);
+        const Δλ = toRad(lon2 - lon1);
+        const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      }
+    </script>
   </body>
 </html>
