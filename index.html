@@ -90,6 +90,37 @@
       <button id="collectBtn">👜 Einsammeln</button>
       <div id="counter">Gefunden: 0 / 3</div>
     </div>
+    <div id="endScreen" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.95);
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      font-family: sans-serif;
+      z-index: 1000;
+    ">
+      <h1>🎉 Alle Objekte gefunden!</h1>
+      <p>Gut gemacht, du hast alle 3 Modelle eingesammelt.</p>
+      <button onclick="location.reload()" style="
+        margin-top: 20px;
+        padding: 12px 24px;
+        font-size: 16px;
+        background: white;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      ">
+        🔄 Neu starten
+      </button>
+    </div>
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
@@ -156,6 +187,9 @@
             collectedModels.add(id);
             collected++;
             counterText.innerText = `Gefunden: ${collected} / ${total}`;
+            if (collected === total) {
+              document.getElementById('endScreen').style.display = 'flex';
+            }
           }
         });
       });
