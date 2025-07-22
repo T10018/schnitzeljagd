@@ -20,12 +20,45 @@
         width: 100%;
         height: 100%;
       }
+      /* UI-Container global */
+      #collectBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 14px 28px;
+        font-size: 18px;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: black;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      #collectBtn:hover {
+        background-color: white;
+      }
+
+      /* Counter oben rechts */
+      #counter {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
     <div id="hud" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center;">
-      <button id="collectBtn" style="padding: 12px 24px; font-size: 16px;">👜 Einsammeln</button>
-      <div id="counter" style="margin-top: 8px; color: white;">Gefunden: 0 / 3</div>
+      <button id="collectBtn">👜 Einsammeln</button>
+      <div id="counter">Gefunden: 0 / 3</div>
     </div>
     <a-scene
       embedded
