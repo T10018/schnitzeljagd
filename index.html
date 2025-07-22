@@ -151,8 +151,8 @@
           const dist = getDistance(camPos.latitude, camPos.longitude, entityCoords.latitude, entityCoords.longitude);
 
           if (dist < 15) { // Radius: 15 Meter
-            model.setAttribute('visible', 'false');
-            //model.parentNode.removeChild(model); // komplett entfernen
+            //model.setAttribute('visible', 'false');
+            model.parentNode.removeChild(model); // komplett entfernen
             collectedModels.add(id);
             collected++;
             counterText.innerText = `Gefunden: ${collected} / ${total}`;
