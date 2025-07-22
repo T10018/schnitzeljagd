@@ -44,8 +44,8 @@
       /* Counter oben rechts */
       #counter {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: env(safe-area-inset-top, 20px);
+        right: env(safe-area-inset-right, 20px);
         background: rgba(0,0,0,0.6);
         color: white;
         padding: 8px 14px;
