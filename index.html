@@ -20,12 +20,21 @@
         width: 100%;
         height: 100%;
       }
-      /* UI-Container global */
-      #collectBtn {
+      /* HUD-Container: zentriert unten */
+      #hud {
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
+        z-index: 10;
+        text-align: center;
+        pointer-events: none; /* Lässt Kamera durchklicken außer bei Buttons */
+        width: 100%;
+        font-family: sans-serif;
+      }
+
+      /* Einsammel-Button */
+      #collectBtn {
         padding: 14px 28px;
         font-size: 18px;
         background-color: rgba(255, 255, 255, 0.9);
@@ -34,24 +43,26 @@
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         cursor: pointer;
-        z-index: 10;
+        pointer-events: auto; /* Wieder klickbar machen */
+        transition: background 0.3s;
       }
 
       #collectBtn:hover {
         background-color: white;
       }
 
-      /* Counter oben rechts */
+      /* Counter: oben rechts statt im Button-Container */
       #counter {
         position: fixed;
-        top: env(safe-area-inset-top, 20px);
-        right: env(safe-area-inset-right, 20px);
+        top: 20px;
+        right: 20px;
         background: rgba(0,0,0,0.6);
         color: white;
         padding: 8px 14px;
         border-radius: 8px;
         font-size: 16px;
-        z-index: 10;
+        pointer-events: auto;
+        z-index: 11;
       }
     </style>
   </head>
