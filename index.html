@@ -72,6 +72,11 @@
       const modelIds = ['model1', 'model2', 'model3'];
       const collectedModels = new Set();
 
+      if (!camPos || !camPos.latitude) {
+        console.log('Warte auf GPS...');
+        return;
+      }
+
       // Einsammel-Button klick
       collectBtn.addEventListener('click', () => {
         const cam = document.querySelector('[gps-camera]');
@@ -87,7 +92,7 @@
           const dist = getDistance(camPos.latitude, camPos.longitude, entityCoords.latitude, entityCoords.longitude);
 
           if (dist < 15) { // Radius: 15 Meter
-            model.setAttribute('visible', 'false');
+            model.parentNode.removeChild(model); // komplett entfernen
             collectedModels.add(id);
             collected++;
             counterText.innerText = `Gefunden: ${collected} / ${total}`;
