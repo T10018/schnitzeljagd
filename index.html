@@ -3,30 +3,45 @@
   <head>
     <title>AR.js Minimal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    
+    <!-- A-Frame (3D-Framework für WebVR/WebAR) -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    
+    <!-- AR.js für GPS-basierte AR im Browser -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+    
+    <!-- Externe CSS-Datei -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Ladeanzeige für GPS -->
     <div id="gpsLoading">
       ⏳ GPS wird gesucht… Bitte kurz stillhalten
     </div>
+
+    <!-- HUD (Head-Up-Display): Button & Counter -->
     <div id="hud">
       <button id="collectBtn">👜 Einsammeln</button>
       <div id="counter">Gefunden: 0 / 3</div>
     </div>
+
+    <!-- Endbildschirm nach Fund aller Modelle -->
     <div id="endScreen">
       <h1>🎉 Alle Objekte gefunden!</h1>
       <p>Gut gemacht, du hast alle 3 Modelle eingesammelt.</p>
       <button onclick="location.reload()">🔄 Neu starten</button>
     </div>
+
+    <!-- A-Frame Szene mit AR.js und GPS-Kamera -->
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
+      <!-- Kamera mit GPS-Tracking -->
       <a-camera gps-camera rotation-reader></a-camera>
 
+      <!-- Modell 1 mit GPS-Koordinaten -->
       <a-entity 
         id="model1"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -35,6 +50,7 @@
         animation-mixer>
       </a-entity>
 
+      <!-- Modell 2 -->
       <a-entity 
         id="model2"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -43,6 +59,7 @@
         animation-mixer>
       </a-entity>
 
+      <!-- Modell 3 -->
       <a-entity 
         id="model3"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -51,6 +68,8 @@
         animation-mixer>
       </a-entity>
     </a-scene>
+
+    <!-- Externe JS-Datei -->
     <script src="script.js"></script>
   </body>
 </html>

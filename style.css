@@ -1,3 +1,4 @@
+/* Vollbild-Hintergrund */
 html, body {
   margin: 0;
   padding: 0;
@@ -6,12 +7,14 @@ html, body {
   background: black;
 }
 
+/* A-Frame Szene nimmt gesamten Bildschirm ein */
 a-scene {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
+/* HUD: zentrierter Button am unteren Bildschirmrand */
 #hud {
   position: fixed;
   bottom: 20px;
@@ -24,6 +27,7 @@ a-scene {
   font-family: sans-serif;
 }
 
+/* Einsammel-Button */
 #collectBtn {
   padding: 14px 28px;
   font-size: 18px;
@@ -37,10 +41,12 @@ a-scene {
   transition: background 0.3s;
 }
 
+/* Hover-Effekt für Button */
 #collectBtn:hover {
   background-color: white;
 }
 
+/* Fortschrittsanzeige oben rechts */
 #counter {
   position: fixed;
   top: 20px;
@@ -54,6 +60,7 @@ a-scene {
   z-index: 11;
 }
 
+/* Schwarzer Ladebildschirm bei GPS-Suche */
 #gpsLoading {
   position: fixed;
   top: 0;
@@ -71,6 +78,7 @@ a-scene {
   font-family: sans-serif;
 }
 
+/* Endbildschirm nach Erfolg */
 #endScreen {
   position: fixed;
   top: 0;
@@ -88,6 +96,7 @@ a-scene {
   z-index: 1000;
 }
 
+/* Button im Endbildschirm */
 #endScreen button {
   margin-top: 20px;
   padding: 12px 24px;
