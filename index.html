@@ -3,133 +3,30 @@
   <head>
     <title>AR.js Minimal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <!-- Kompatible A-Frame-Version -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <!-- AR.js für GPS/Webcam ohne Marker -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        height: 100%;
-        background: black;
-      }
-      a-scene {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-      /* HUD-Container: zentriert unten */
-      #hud {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
-        text-align: center;
-        pointer-events: none; /* Lässt Kamera durchklicken außer bei Buttons */
-        width: 100%;
-        font-family: sans-serif;
-      }
-
-      /* Einsammel-Button */
-      #collectBtn {
-        padding: 14px 28px;
-        font-size: 18px;
-        background-color: rgba(255, 255, 255, 0.9);
-        color: black;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        cursor: pointer;
-        pointer-events: auto; /* Wieder klickbar machen */
-        transition: background 0.3s;
-      }
-
-      #collectBtn:hover {
-        background-color: white;
-      }
-
-      /* TODO Counter fixxen!!!!! */
-      /* Counter: oben rechts statt im Button-Container */
-      #counter {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(0,0,0,0.6);
-        color: white;
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-size: 16px;
-        pointer-events: auto;
-        z-index: 11;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="gpsLoading" style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 18px;
-      z-index: 100;
-      font-family: sans-serif;
-      ">
+    <div id="gpsLoading">
       ⏳ GPS wird gesucht… Bitte kurz stillhalten
     </div>
-    <div id="hud" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center;">
+    <div id="hud">
       <button id="collectBtn">👜 Einsammeln</button>
       <div id="counter">Gefunden: 0 / 3</div>
     </div>
-    <div id="endScreen" style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.95);
-      color: white;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      font-family: sans-serif;
-      z-index: 1000;
-    ">
+    <div id="endScreen">
       <h1>🎉 Alle Objekte gefunden!</h1>
       <p>Gut gemacht, du hast alle 3 Modelle eingesammelt.</p>
-      <button onclick="location.reload()" style="
-        margin-top: 20px;
-        padding: 12px 24px;
-        font-size: 16px;
-        background: white;
-        color: black;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      ">
-        🔄 Neu starten
-      </button>
+      <button onclick="location.reload()">🔄 Neu starten</button>
     </div>
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
-      <!-- GPS Kamera -->
       <a-camera gps-camera rotation-reader></a-camera>
-      
-      <!-- Modell 1 -->
+
       <a-entity 
         id="model1"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -138,7 +35,6 @@
         animation-mixer>
       </a-entity>
 
-      <!-- Modell 2 -->
       <a-entity 
         id="model2"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
@@ -147,76 +43,14 @@
         animation-mixer>
       </a-entity>
 
-      <!-- Modell 3 -->
       <a-entity 
         id="model3"
         gps-entity-place="latitude: 47.99621142936126; longitude: 14.119692309253066"
         gltf-model="https://t10018.github.io/schnitzeljagd/models/model1.glb" 
         scale="2 2 2"
         animation-mixer>
-        
       </a-entity>
     </a-scene>
-    <script>
-      const collectBtn = document.getElementById('collectBtn');
-      const counterText = document.getElementById('counter');
-      let collected = 0;
-      const total = 3;
-
-      // Modell-IDs zum Wiedererkennen
-      const modelIds = ['model1', 'model2', 'model3'];
-      const collectedModels = new Set();
-
-      // Einsammel-Button klick
-      collectBtn.addEventListener('click', () => {
-        const cam = document.querySelector('[gps-camera]');
-        const camPos = cam.components['gps-camera'].currentCoords;
-
-        modelIds.forEach(id => {
-          if (collectedModels.has(id)) return; // schon eingesammelt
-
-          const model = document.getElementById(id);
-          const entityCoords = model.getAttribute('gps-entity-place');
-
-          // Entfernung berechnen
-          const dist = getDistance(camPos.latitude, camPos.longitude, entityCoords.latitude, entityCoords.longitude);
-
-          if (dist < 15) { // Radius: 15 Meter
-            //model.setAttribute('visible', 'false');
-            model.parentNode.removeChild(model); // komplett entfernen
-            collectedModels.add(id);
-            collected++;
-            counterText.innerText = `Gefunden: ${collected} / ${total}`;
-            if (collected === total) {
-              document.getElementById('endScreen').style.display = 'flex';
-            }
-          }
-        });
-      });
-
-      // Haversine-Formel
-      function getDistance(lat1, lon1, lat2, lon2) {
-        function toRad(x) { return x * Math.PI / 180; }
-        const R = 6371e3; // Erdradius in Meter
-        const φ1 = toRad(lat1), φ2 = toRad(lat2);
-        const Δφ = toRad(lat2 - lat1);
-        const Δλ = toRad(lon2 - lon1);
-        const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
-        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      }
-
-      // GPS-Loading Screen
-      const gpsLoading = document.getElementById('gpsLoading');
-
-      // 1. Sobald Position erkannt → Lade-Screen ausblenden
-      document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
-        if (gpsLoading) gpsLoading.style.display = 'none';
-      });
-
-      // 2. Sicherheits-Timer: Lade-Screen nach 15s ausblenden, auch wenn kein GPS kam
-      setTimeout(() => {
-        if (gpsLoading) gpsLoading.style.display = 'none';
-      }, 15000);
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
