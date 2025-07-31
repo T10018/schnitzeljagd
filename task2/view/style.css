@@ -28,7 +28,7 @@ html, body {
         z-index: 100;
         font-family: sans-serif;
       }
-      
+
 .button {
   position: fixed;
   padding: 0.8rem 1.2rem;
@@ -41,6 +41,7 @@ html, body {
   z-index: 1000;
 }
 .bottom-right {
+  position: fixed;
   bottom: 20px;
   right: 20px;
   background-color: #4CAF50;
