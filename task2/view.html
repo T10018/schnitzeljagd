@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AR Modellanzeige</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background: black;
+      }
+
+      a-scene {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      #gpsLoading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 18px;
+        z-index: 100;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gpsLoading">⏳ GPS wird gesucht…</div>
+
+    <a-scene
+      embedded
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+    >
+      <a-camera gps-camera rotation-reader></a-camera>
+
+      <a-entity 
+        gps-entity-place="latitude: 47.99621564921616; longitude: 14.119692166579815"
+        gltf-model="https://t10018.github.io/schnitzeljagd/task5/models/model1.glb" 
+        scale="2 2 2"
+        animation-mixer>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      const gpsLoading = document.getElementById('gpsLoading');
+      document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
+        if (gpsLoading) gpsLoading.style.display = 'none';
+      });
+      setTimeout(() => {
+        if (gpsLoading) gpsLoading.style.display = 'none';
+      }, 15000);
+    </script>
+  </body>
+</html>
