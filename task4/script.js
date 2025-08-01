@@ -25,7 +25,9 @@ function checkAnswer() {
   const answer = selectedOption.value;
   if (answer === 'unbrauchbar') {
     document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Richtige Lösung! Aufgabe erfüllt.</h1>";
+    //window.location.href = "https://t10018.github.io/schnitzeljagd/task4/xxxxxxxx";
   } else {
     document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Falsche Auswahl. Bitte nochmals versuchen.</h1>";
+    //window.location.href = "https://t10018.github.io/schnitzeljagd/task4/xxxxxxxx";
   }
 }
