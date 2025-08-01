@@ -30,7 +30,7 @@ collectBtn.addEventListener('click', () => {
       model.parentNode.removeChild(model); // Modell aus Szene entfernen
       collectedModels.add(id);
       collected++;
-      counterText.innerText = `Gefunden: ${collected} / ${total}`;
+      counterText.innerText = `${collected} / ${total}`;
 
       // Wenn alle Modelle eingesammelt → Endbildschirm zeigen
       if (collected === total) {
@@ -55,15 +55,34 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// Timer
+const timerElement = document.getElementById('timer');
+let secondsElapsed = 0;
+let timerStarted = false;
+let timerInterval = null;
+
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true;
+
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+    const seconds = String(secondsElapsed % 60).padStart(2, '0');
+    timerElement.innerText = `${minutes}:${seconds}`;
+  }, 1000);
+}
+
 // Ladebildschirm beim Start
 const gpsLoading = document.getElementById('gpsLoading');
 
-// Wenn GPS-Position gefunden → Ladebildschirm ausblenden
 document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
   if (gpsLoading) gpsLoading.style.display = 'none';
+  startTimer();  // Timer startet, sobald GPS gefunden
 });
 
-// Sicherheits-Timeout: nach 15 Sekunden Ladebildschirm auch ohne GPS ausblenden
+// Fallback: Startet Timer nach 15 Sekunden trotzdem
 setTimeout(() => {
   if (gpsLoading) gpsLoading.style.display = 'none';
+  startTimer();  // Falls GPS zu lange braucht
 }, 15000);

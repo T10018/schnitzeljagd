@@ -27,6 +27,33 @@ a-scene {
   font-family: sans-serif;
 }
 
+/* Einheitlicher Stil für HUD-Boxen */
+.hudBox {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  pointer-events: auto;
+  z-index: 11;
+  font-family: sans-serif;
+}
+
+/* Timer zentriert oben */
+#timer {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Counter rechts oben */
+#counter {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
 /* Einsammel-Button */
 #collectBtn {
   padding: 14px 28px;
@@ -58,6 +85,7 @@ a-scene {
   font-size: 16px;
   pointer-events: auto;
   z-index: 11;
+  font-family: sans-serif;
 }
 
 /* Schwarzer Ladebildschirm bei GPS-Suche */
