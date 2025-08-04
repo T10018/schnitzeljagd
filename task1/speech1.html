@@ -1,153 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charakter Dialog</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: white;
-            height: 100vh;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charakter-Dialog</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f0f0f0;
+    }
 
-        .character {
-            position: fixed;
-            bottom: 0;
-            left: 20px;
-            width: 200px;
-            height: auto;
-        }
+    #character {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 50vh;
+      max-height: 500px;
+    }
 
-        .speech-bubble {
-            position: fixed;
-            bottom: 250px;
-            left: 240px;
-            background: white;
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 400px;
-            font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+    #speech {
+      position: fixed;
+      top: 5vh;
+      left: 1rem;
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 1rem;
+      max-width: 80%;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
 
-        .speech-bubble:before {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 30px;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 20px solid white;
-        }
+    .button {
+      position: fixed;
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      color: #fff;
+      z-index: 10;
+    }
 
-        .speech-bubble:after {
-            content: '';
-            position: absolute;
-            bottom: -22px;
-            left: 28px;
-            width: 0;
-            height: 0;
-            border-left: 22px solid transparent;
-            border-right: 22px solid transparent;
-            border-top: 22px solid #333;
-            z-index: -1;
-        }
+    .button:hover {
+      opacity: 0.9;
+    }
 
-        .button {
-            position: fixed;
-            padding: 0.8rem 1.2rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            color: #fff;
-        }
+    .bottom-right {
+      bottom: 20px;
+      right: 20px;
+      background: #4CAF50;
+    }
 
-        .button:hover {
-            opacity: 0.9;
-        }
-
-        .button-back {
-            bottom: 20px;
-            left: 20px;
-            background: #f44336;
-        }
-
-        .button-forward {
-            bottom: 20px;
-            right: 20px;
-            background: #4CAF50;
-        }
-
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    </style>
+    .bottom-left {
+      bottom: 20px;
+      left: 20px;
+      background: #888;
+    }
+  </style>
 </head>
 <body>
-    <!-- Charakter Bild -->
-    <img src="../pics/pic1.png" 
-         alt="Charakter" class="character" id="character">
 
-    <!-- Sprechblase -->
-    <div class="speech-bubble" id="speechBubble">
-        Hallo! Willkommen auf meiner Website. Ich bin hier, um mit dir zu sprechen!
-    </div>
+  <img id="character" src="../pics/pic1.png" alt="Charakter">
 
-    <!-- Navigation Buttons -->
-    <button class="button button-back" id="backBtn" onclick="goBack()" disabled>Zurück</button>
-    <button class="button button-forward" id="forwardBtn" onclick="goForward()">Weiter</button>
+  <div id="speech">Seiet gegrüßt, Feldmarschall Fabian. </div>
 
-    <script>
-        // Dialog Texte
-        const dialogues = [
-            "Hallo! Willkommen auf meiner Website. Ich bin hier, um mit dir zu sprechen!",
-            "Schön, dass du hier bist! Wie geht es dir denn heute?",
-            "Ich hoffe, dir gefällt diese einfache Website. Sie ist extra für unser Gespräch gemacht!",
-            "Hast du Fragen an mich? Ich stehe gerne zur Verfügung!",
-            "Das war unser kleines Gespräch. Vielen Dank fürs Zuhören!"
-        ];
+  <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  <button class="button bottom-right" onclick="next()">Weiter</button>
 
-        let currentScene = 0;
+  <script>
+    const lines = [
+        /*Variable mit Name des Spielers*/
+      "Seiet gegrüßt, Feldmarschall Fabian. ",
+      "Die Lage ist ernst. Französische Vorhuten wurden bereits jenseits von Wels gesichtet, sie marschieren rasch und ohne Rast. Es bleibt uns wenig Zeit.", 
+      "Ihr werdet mit dem Kommando über die Verteidigung von Ebelsberg betraut. Die Brücke über die Traun ist unser letzter Übergang, fällt sie, so verlieren wir den Anschluss an die Hauptarmee.",
+      "Ihr müsst nun klug und rasch handeln. Ich werde Euch mit Rat zur Seite stehen, soweit es mir möglich ist, auch wenn ich selbst diesen Kampf nicht mehr mit dem Säbel fechten kann. Doch ich kenne diese Straßen, diese Männer und unsere Chancen.",
+      "Verzaget nicht, Feldmarschall. Österreich zählt auf Euch."
+    ];
 
-        function updateScene() {
-            const speechBubble = document.getElementById('speechBubble');
-            const backBtn = document.getElementById('backBtn');
-            const forwardBtn = document.getElementById('forwardBtn');
+    let index = 0;
 
-            // Text aktualisieren
-            speechBubble.textContent = dialogues[currentScene];
+    function updateSpeech() {
+      document.getElementById("speech").innerHTML = lines[index];
+      document.getElementById("backBtn").style.display = index > 0 ? "block" : "none";
+    }
 
-            // Button Status aktualisieren
-            backBtn.disabled = currentScene === 0;
-            forwardBtn.disabled = currentScene === dialogues.length - 1;
-        }
+    function next() {
+    if (index < lines.length - 1) {
+        index++;
+        updateSpeech();
+    } else {
+        window.location.href = "speech1.html";
+    }
+    }
 
-        function goBack() {
-            if (currentScene > 0) {
-                currentScene--;
-                updateScene();
-            }
-        }
+    function previous() {
+      if (index > 0) {
+        index--;
+        updateSpeech();
+      }
+    }
+  </script>
 
-        function goForward() {
-            if (currentScene < dialogues.length - 1) {
-                currentScene++;
-                updateScene();
-            }
-        }
-
-        // Initial setup
-        updateScene();
-    </script>
 </body>
 </html>
