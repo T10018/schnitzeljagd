@@ -3,7 +3,7 @@ function checkAnswer(){
   const input=document.getElementById("userInput").value.trim().toLowerCase();
   const solution="der wagen im park ist blockiert";
   if(input===solution){
-    document.body.innerHTML="<h1 style='text-align:center;margin-top:40vh;'>Nächste Aufgabe wird geladen...</h1>";
+    window.location.href = "../speeches/speech_task1_ok.html";
     //window.location.href = "https://t10018.github.io/schnitzeljagd/task1/xxxxxxxx";
   }else{
     document.getElementById("feedback").textContent="Leider falsch – versuch es nochmal!";
@@ -12,7 +12,7 @@ function checkAnswer(){
 
 // Beendet Aufgabe manuell
 function skipTask(){
-  document.body.innerHTML="<h1 style='text-align:center;margin-top:40vh;'>Aufgabe wurde übersprungen.</h1>";
+  window.location.href = "../speeches/speech_task1_nok.html";
   //window.location.href = "https://t10018.github.io/schnitzeljagd/task1/xxxxxxxx";
 }
 

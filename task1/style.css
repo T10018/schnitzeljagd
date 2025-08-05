@@ -1,79 +1,119 @@
-html,body{
-    overflow:hidden;
-    height:100%
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    font-family: 'Crimson Text', serif;
+    background: linear-gradient(135deg, #2c1810, #6b4423);
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f0f0f0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    padding:1rem
+/* Hintergrundmuster-Effekt */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 25%),
+                      radial-gradient(circle at 75% 75%, rgba(160, 82, 45, 0.1) 0%, transparent 25%);
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.container{
-    text-align:center;
-    max-width:90%
+.container {
+    text-align: center;
+    max-width: 90%;
+    color: #f4f1e8;
+    position: relative;
+    z-index: 1;
 }
 
-h1{
-    font-size:1.5rem;
-    margin-bottom:1rem
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #f4f1e8;
 }
 
-.code-box{
-    background:#fff;
-    padding:1rem;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-    font-size:1.2rem;
-    margin-bottom:1rem
+.code-box {
+    background: linear-gradient(145deg, #2c1810, #4a3728);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 2px 5px rgba(255, 255, 255, 0.1),
+                inset 0 -2px 5px rgba(139, 69, 19, 0.2);
+    border: 2px solid #8b4513;
+    font-size: 1.2rem;
+    color: #f4f1e8;
+    position: relative;
+    z-index: 2;
 }
 
-input{
-    width:100%;
-    padding:0.6rem;
-    font-size:1rem;
-    border-radius:8px;
-    border:1px solid #ccc;
-    margin-bottom:2rem
+input {
+    width: 94%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid #8b4513;
+    background-color: #fdf9f3;
+    color: #2c1810;
+    margin-bottom: 1rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.button{
-    position:fixed;
-    padding:0.8rem 1.2rem;
-    border:none;
-    border-radius:10px;
-    font-size:1rem;
-    cursor:pointer;
-    box-shadow:0 4px 6px rgba(0,0,0,0.2);
-    color:#fff
+/* Buttons */
+.button {
+    position: fixed;
+    padding: 1rem 1rem;
+    letter-spacing: 1px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border: 3px solid #8b4513;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    color: #f4f1e8;
+    z-index: 10;
+    transition: background 0.3s ease;
 }
 
-.button:hover{
-    opacity:0.9
+/* Rechte untere Ecke */
+.bottom-right {
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(145deg, #b8860b, #daa520);
+}
+.bottom-right:hover {
+    background: linear-gradient(145deg, #daa520, #b8860b);
 }
 
-.bottom-right{
-    bottom:20px;
-    right:20px;
-    background:#4CAF50
+/* Linke untere Ecke */
+.bottom-left {
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(145deg, #696969, #808080);
+}
+.bottom-left:hover {
+    background: linear-gradient(145deg, #808080, #696969);
 }
 
-.bottom-left{
-    bottom:20px;
-    left:20px;
-    background:#e74c3c
+/* Nachricht */
+.message {
+    /*margin-top: 0.5rem;*/
+    font-weight: bold;
+    color: #ffcccc;
 }
 
-.message{
-    margin-top:1rem;
-    font-weight:bold;
-    color:red
+/* Optional: fade-out Klasse */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 /* Tipp-Button oben links */
