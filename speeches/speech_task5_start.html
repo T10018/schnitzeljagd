@@ -10,18 +10,16 @@
 
   <img id="character" src="../pics/pic1.png" alt="Charakter">
 
-  <div id="speech">Feldmarschall, wir haben brisante Neuigkeiten: Ein altes Lagerhaus, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt.</div>
+  <div id="speech">Feldmarschall, die Lage spitzt sich zu – nicht nur unsere Truppen, sondern auch die Stadtbewohner sind in Gefahr.</div>
 
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
     const lines = [
-      "Feldmarschall, wir haben brisante Neuigkeiten: Ein altes Lagerhaus, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt. ",
-      "Unsere Truppen sind geschwächt, sie ziehen sich zurück. Ein Stoßtrupp ist nahe genug, um das Pulver zu bergen aber die Kommunikation mit ihm ist unterbrochen. ",
-      "General B. meldet, der Feind sei durch Morast im Nordwesten verlangsamt. Seine Schätzung: mindestens zwei Tage, bis die Franzosen die Stadt erreichen. ",
-      "General M. hingegen berichtet, dass französische Reiter bereits westlich der Stadt gesehen wurden, offenbar eine Vorhut abgeschnitten vom Hauptheer. ",
-      "Unsere Munition reicht laut Inventar noch für vier Gefechte. Der Feind führt nachweislich leichtere Feldkanonen – mobil, aber abhängig von Nachschub. "
+      "Feldmarschall, die Lage spitzt sich zu – nicht nur unsere Truppen, sondern auch die Stadtbewohner sind in Gefahr. ",
+      "Alte, Kinder, Verwundete – sie brauchen Schutz, und nur Ihr könnt sie rechtzeitig in Sicherheit bringen. Findet die Flüchtigen und sammelt sie auf. ",
+      "Es ist nicht viel Zeit – die Franzosen marschieren bereits durch die Vorstadt. Verlieren wir sie, verlieren wir unser Gewissen. Beeilt Euch! "
     ];
 
     let index = 0;
@@ -52,7 +50,7 @@
         document.body.classList.add('fade-out');
         requestAnimationFrame(() => {
         setTimeout(() => {
-          window.location.href = "../task4/index.html";
+          window.location.href = "../task5/index.html";
         }, 500);
         });
       }
