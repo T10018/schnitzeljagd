@@ -1,9 +1,11 @@
+html {
+    background: linear-gradient(135deg, #2c1810, #6b4423);
+}
 html, body {
     overflow: hidden;
     height: 100%;
     margin: 0;
     font-family: 'Crimson Text', serif;
-    background: linear-gradient(135deg, #2c1810, #6b4423);
     position: relative;
     padding: 1rem;
     display: flex;
