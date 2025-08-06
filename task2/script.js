@@ -35,10 +35,8 @@ function checkAnswer() {
   const isCorrect = selected.length === correct.length && correct.every(item => selected.includes(item));
 
   if (isCorrect) {
-    document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Richtig! Die nächste Aufgabe wird geladen...</h1>";
-    ////window.location.href = "https://t10018.github.io/schnitzeljagd/task2/xxxxxxxx";
+    window.location.href = "../speeches/speech_task2_ok.html";
   } else {
-    document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Leider falsch...</h1>";
-    ////window.location.href = "https://t10018.github.io/schnitzeljagd/task2/xxxxxxxx";
+    window.location.href = "../speeches/speech_task2_nok.html";
   }
 }
