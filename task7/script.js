@@ -15,7 +15,7 @@ function checkAnswer() {
   } else if (totalPoints < 264 && answer === "zerstören") {
     showSuccess("Richtige Entscheidung: Rückzug durch Brückensprengung gesichert!");
   } else {
-    showFailure("Unbekannter Fehler.");
+    alert("Unbekannter Fehler.");
   }
 }
 
