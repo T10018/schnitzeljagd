@@ -95,3 +95,31 @@ body::before {
     opacity: 0;
     transition: opacity 0.5s ease;
 }
+
+#smoke {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;              /* <<< passt Video ohne Verzerrung an */
+  z-index: 5;
+  pointer-events: none;           /* <<< macht es "unsichtbar" für Klicks */
+  opacity: 0.4;                   /* <<< je nach Effektwunsch */
+  mix-blend-mode: screen;        /* <<< nützlich bei dunklem Hintergrund */
+}
+
+@keyframes redFlash {
+  0%, 100% { background-color: transparent; }
+  50% { background-color: rgba(255, 0, 0, 0.3); }
+}
+
+#alarmFlash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+  animation: redFlash 0.5s ease-in-out infinite;
+}
