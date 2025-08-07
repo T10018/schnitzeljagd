@@ -12,11 +12,6 @@ function hideTip() {
   document.body.style.overflow = 'auto';
 }
 
-// Tippfenster mit ESC schließen
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') hideTip();
-});
-
 // Prüft die ausgewählten Antworten
 function checkAnswer() {
   const selected = Array.from(document.querySelectorAll('input[name="item"]:checked')).map(cb => cb.value);
