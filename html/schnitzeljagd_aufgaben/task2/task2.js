@@ -35,8 +35,8 @@ function checkAnswer() {
   const isCorrect = selected.length === correct.length && correct.every(item => selected.includes(item));
 
   if (isCorrect) {
-    window.location.href = "../speeches/speech_task2_ok.html";
+    window.location.href = "../../speeches/speech_task2_ok.html";
   } else {
-    window.location.href = "../speeches/speech_task2_nok.html";
+    window.location.href = "../../speeches/speech_task2_nok.html";
   }
 }

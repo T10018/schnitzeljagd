@@ -16,53 +16,70 @@
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
-    const lines = [
-      "Feldmarschall, wir haben brisante Neuigkeiten: Ein altes Lagerhaus, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt. ",
-      "Unsere Truppen sind geschwächt, sie ziehen sich zurück. Ein Stoßtrupp ist nahe genug, um das Pulver zu bergen aber die Kommunikation mit ihm ist unterbrochen. ",
-      "General B. meldet, der Feind sei durch Morast im Nordwesten verlangsamt. Seine Schätzung: mindestens zwei Tage, bis die Franzosen die Stadt erreichen. ",
-      "General M. hingegen berichtet, dass französische Reiter bereits westlich der Stadt gesehen wurden, offenbar eine Vorhut abgeschnitten vom Hauptheer. ",
-      "Unsere Munition reicht laut Inventar noch für vier Gefechte. Der Feind führt nachweislich leichtere Feldkanonen – mobil, aber abhängig von Nachschub. "
-    ];
+  const lines = [
+    "Feldmarschall, wir haben brisante Neuigkeiten: Ein altes Lagerhaus, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt. ",
+    "Unsere Truppen sind geschwächt, sie ziehen sich zurück. Ein Stoßtrupp ist nahe genug, um das Pulver zu bergen aber die Kommunikation mit ihm ist unterbrochen. ",
+    "General B. meldet, der Feind sei durch Morast im Nordwesten verlangsamt. Seine Schätzung: mindestens zwei Tage, bis die Franzosen die Stadt erreichen. ",
+    "General M. hingegen berichtet, dass französische Reiter bereits westlich der Stadt gesehen wurden, offenbar eine Vorhut abgeschnitten vom Hauptheer. ",
+    "Unsere Munition reicht laut Inventar noch für vier Gefechte. Der Feind führt nachweislich leichtere Feldkanonen – mobil, aber abhängig von Nachschub. "
+  ];
 
-    let index = 0;
+  // Default: normale Startposition
+  let index = 0;
 
-    function updateSpeech() {
-      const speechElement = document.getElementById("speech");
-      const backBtn = document.getElementById("backBtn");
-      const nextBtn = document.getElementById("nextBtn");
-      
-      // Fade-Effekt
-      speechElement.style.opacity = '0';
-      
-      setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
-      }, 200);
-      
-      backBtn.style.display = index > 0 ? "block" : "none";
-      nextBtn.innerHTML = "Weiter";
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Wenn wir von task4 kommen (sessionStorage-Flag), dann starte hinten
+    try {
+      const fromTask4 = sessionStorage.getItem('fromTask4');
+      if (fromTask4 === '1') {
+        index = lines.length - 1;
+        sessionStorage.removeItem('fromTask4'); // nur einmal verwenden
+      }
+    } catch (e) { /* ignore */ }
 
-    function next() {
-      if (index < lines.length - 1) {
-        index++;
-        updateSpeech();
-      } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
-        requestAnimationFrame(() => {
+    // erste Anzeige
+    updateSpeech();
+  });
+
+  function updateSpeech() {
+    const speechElement = document.getElementById("speech");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    // Fade-Effekt
+    speechElement.style.opacity = '0';
+    setTimeout(() => {
+      speechElement.innerHTML = lines[index];
+      speechElement.style.opacity = '1';
+    }, 200);
+
+    // Back-Button nur anzeigen, wenn index > 0 (wie vorher)
+    backBtn.style.display = index > 0 ? "block" : "none";
+
+    // Button-Text anpassen (optional)
+    nextBtn.innerHTML = index < lines.length - 1 ? "Weiter" : "Weiter";
+  }
+
+  function next() {
+    if (index < lines.length - 1) {
+      index++;
+      updateSpeech();
+    } else {
+      // Weiter zur Aufgabe (wie gehabt) mit Fade
+      document.body.classList.add('fade-out');
+      requestAnimationFrame(() => {
         setTimeout(() => {
           window.location.href = "../schnitzeljagd_aufgaben/task4/task4.html";
         }, 500);
-        });
-      }
+      });
     }
+  }
 
-    function previous() {
-      if (index > 0) {
-        index--;
-        updateSpeech();
-      }
+  function previous() {
+    if (index > 0) {
+      index--;
+      updateSpeech();
+    }
     }
   </script>
 </body>
