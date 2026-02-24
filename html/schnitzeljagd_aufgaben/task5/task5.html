@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>AR World Tracking Test</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
-    <!-- A-Frame -->
+    <title>AR.js Minimal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    
+    <!-- A-Frame (3D-Framework für WebVR/WebAR) -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-
-    <!-- WebXR AR (A-Frame AR hit-test) -->
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/aframe-ar-hit-test/dist/aframe-ar-hit-test.min.js"></script>
-
-    <style>
-      #tapMessage {
-        position: absolute;
-        top: 20px;
-        width: 100%;
-        text-align: center;
-        font-size: 1.2em;
-        color: white;
-        text-shadow: 0 0 5px black;
-        z-index: 100;
-      }
-    </style>
+    
+    <!-- AR.js für GPS-basierte AR im Browser -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+    
+    <!-- Externe CSS-Datei -->
+    <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
-    <div id="tapMessage">Tippe auf den Boden, um das Modell zu platzieren</div>
+    <!-- Ladeanzeige für GPS -->
+    <div id="gpsLoading">
+      ⏳ GPS wird gesucht… Bitte kurz stillhalten
+    </div>
 
+    <!-- Button für Tipps oben links -->
+    <button id="tipBtn" class="tip-button" onclick="showTip()" style="display: none;">
+      <svg class="lightbulb" viewBox="0 0 24 24">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zM9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z"/>
+      </svg>
+    </button>
+
+    <!-- Halbtransparenter Hintergrund beim Tipp-Popup -->
+    <div class="popup-overlay" id="popupOverlay" onclick="hideTip()"></div>
+
+    <!-- Tipp-Fenster -->
+    <div class="tip-popup" id="tipPopup">
+      <button class="close-btn" onclick="hideTip()">&times;</button>
+      <div class="popup-header">
+        <svg class="popup-icon" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zM9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z"/>
+        </svg>
+        <h2 class="popup-title">Hilfreiche Tipps</h2>
+      </div>
+      <div class="popup-content">
+        <p>Denkt taktisch – was, wenn die Franzosen uns überrumpeln?</p>
+        <ul>
+          <li>Krank</li>
+          <li>Verwundet</li>
+          <li>Alt</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HUD (Head-Up-Display): Button & Counter -->
+    <div id="hud">
+      <button id="collectBtn">Einsammeln</button>
+    </div>
+    <div id="timer" class="hudBox">00:00</div>
+    <div id="counter" class="hudBox">0 / 3</div>
+
+
+    <!-- Endbildschirm nach Fund aller Modelle 
+    <div id="endScreen">
+      <h1>🎉 Alle Objekte gefunden!</h1>
+      <p>Gut gemacht, du hast alle 3 Modelle eingesammelt.</p>
+      <button onclick="location.reload()">🔄 Neu starten</button>
+    </div>-->
+
+    <!-- A-Frame Szene mit AR.js und GPS-Kamera -->
     <a-scene
-      vr-mode-ui="enabled: false"
       embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
-      <a-camera id="camera" position="0 1.6 0" look-controls></a-camera>
+      <!-- Kamera mit GPS-Tracking -->
+      <a-camera gps-camera rotation-reader></a-camera>
 
-      <!-- Das Modell, das wir platzieren -->
+      <!-- Modell 1 mit GPS-Koordinaten -->
       <a-entity 
         id="model1"
+        gps-entity-place="latitude: 47.99621374697358; longitude: 14.11968526140547"
         gltf-model="models/model1.glb" 
-        scale="0.5 0.5 0.5"
-        visible="false"
+        scale="2 2 2"
         animation-mixer>
       </a-entity>
 
-      <!-- Licht -->
-      <a-entity light="type: directional; color: #fff; intensity: 1" position="0 10 0"></a-entity>
-    </a-scene>
+      <!--
+      <a-entity 
+        id="model2"
+        gps-entity-place="latitude: 47.996208811054146; longitude: 14.119676544226495"
+        gltf-model="models/model1.glb" 
+        scale="2 2 2"
+        animation-mixer>
+      </a-entity>
 
-    <script>
-      const scene = document.querySelector('a-scene');
-      const model = document.getElementById('model1');
-      const tapMessage = document.getElementById('tapMessage');
+      <a-entity 
+        id="model3"
+        gps-entity-place="latitude: 47.9962150931339; longitude: 14.119710071838723"
+        gltf-model="models/model1.glb" 
+        scale="2 2 2"
+        animation-mixer>
+      </a-entity>
+    </a-scene>-->
 
-      // AR Hit-Test platzieren
-      scene.addEventListener('click', async (event) => {
-        if (model.getAttribute('visible') === true) return; // schon platziert
-
-        // Hit-Test API von AR.js / WebXR
-        const hitTestResults = await scene.renderer.xr.getHitTestResults();
-        if (hitTestResults.length === 0) return;
-
-        const hit = hitTestResults[0];
-
-        const pose = hit.getPose(scene.renderer.xr.getReferenceSpace());
-        const position = pose.transform.position;
-        const rotation = pose.transform.orientation;
-
-        model.setAttribute('position', `${position.x} ${position.y} ${position.z}`);
-        model.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
-        model.setAttribute('visible', true);
-
-        tapMessage.style.display = 'none';
-      });
-    </script>
+    <!-- Externe JS-Datei -->
+    <script src="task5.js"></script>
   </body>
 </html>
