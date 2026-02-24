@@ -7,7 +7,7 @@ const total = 3;   // Gesamtzahl der Modelle
 // IDs der AR-Modelle
 const modelIds = ['model1']; //, 'model2', 'model3'
 const collectedModels = new Set(); // Bereits eingesammelte Modelle
-/*
+
 // Klick auf den Einsammel-Button
 collectBtn.addEventListener('click', () => {
   const cam = document.querySelector('[gps-camera]');
@@ -54,7 +54,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
   const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
-*/
+
 
 // ==============================================================================================================================
 // Unter clean
