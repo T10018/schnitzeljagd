@@ -1,21 +1,26 @@
+// IDs der AR-Modelle
+const modelIds = ['model1'];
+
+// Ladebildschirm beim Start
 const gpsLoading = document.getElementById('gpsLoading');
-const weiterBtn = document.getElementById('weiterBtn');
 
-function showWeiterButton() {
-  gpsLoading.style.display = 'none';
-  weiterBtn.style.display = 'block';
-}
-
-// Wenn GPS-Position gefunden → Ladebildschirm ausblenden und Button zeigen
 document.querySelector('[gps-camera]').addEventListener('gps-camera-update-position', () => {
-  showWeiterButton();
+  if (gpsLoading) gpsLoading.style.display = 'none';
+  startTimer();  // Timer startet, sobald GPS gefunden
 });
 
-// Sicherheits-Timeout: nach 15 Sekunden ebenfalls anzeigen
+// Fallback: Startet Timer nach 15 Sekunden trotzdem
 setTimeout(() => {
-  showWeiterButton();
-}, 15000);
+  if (gpsLoading) gpsLoading.style.display = 'none';
+  startTimer();  // Falls GPS zu lange braucht
+}, 5000);
 
-function weiter() {
-  window.location.href = "https://t10018.github.io/schnitzeljagd/task2/index.html";
+function next() {
+// Fade-out-Effekt vor dem Seitenwechsel
+  document.body.classList.add('fade-out');
+  requestAnimationFrame(() => {
+  setTimeout(() => {
+    window.location.href = "../task2.html";
+  }, 500);
+  });
 }
