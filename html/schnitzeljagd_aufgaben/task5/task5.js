@@ -5,7 +5,7 @@ let collected = 0; // Anzahl der eingesammelten Modelle
 const total = 3;   // Gesamtzahl der Modelle
 
 // IDs der AR-Modelle
-const modelIds = ['model1']; //, 'model2', 'model3'
+const modelIds = ['model1', 'model2', 'model3'];
 const collectedModels = new Set(); // Bereits eingesammelte Modelle
 
 // Klick auf den Einsammel-Button
