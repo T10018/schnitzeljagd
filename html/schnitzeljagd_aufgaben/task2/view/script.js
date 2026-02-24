@@ -20,7 +20,7 @@ function next() {
   document.body.classList.add('fade-out');
   requestAnimationFrame(() => {
   setTimeout(() => {
-    window.location.href = "../task2.html";
+    window.location.href = "../../../speeches/speech_task2_start.html";
   }, 500);
   });
 }
