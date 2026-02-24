@@ -1,7 +1,7 @@
 // Referenzen zu HTML-Elementen
 const collectBtn = document.getElementById('collectBtn');
 const counterText = document.getElementById('counter');
-let collected = 2; // Anzahl der eingesammelten Modelle
+let collected = 0; // Anzahl der eingesammelten Modelle
 const total = 3;   // Gesamtzahl der Modelle
 
 // IDs der AR-Modelle
