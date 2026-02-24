@@ -56,6 +56,33 @@ function getDistance(lat1, lon1, lat2, lon2) {
 }
 */
 
+// ==============================================================================================================================
+// Unter clean
+// ==============================================================================================================================
+
+// Timer
+const timerElement = document.getElementById('timer');
+let secondsElapsed = 0;
+let timerStarted = false;
+let timerInterval = null;
+
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true;
+
+  // Timer starten
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+    const seconds = String(secondsElapsed % 60).padStart(2, '0');
+    timerElement.innerText = `${minutes}:${seconds}`;
+  }, 1000);
+
+  // Tipp-Button sichtbar machen
+  const tipBtn = document.getElementById('tipBtn');
+  if (tipBtn) tipBtn.style.display = 'block';
+}
+
 // Ladebildschirm beim Start
 const gpsLoading = document.getElementById('gpsLoading');
 
@@ -69,3 +96,22 @@ setTimeout(() => {
   if (gpsLoading) gpsLoading.style.display = 'none';
   startTimer();  // Falls GPS zu lange braucht
 }, 15000);
+
+// Öffnet das Tipp-Fenster
+function showTip() {
+  document.getElementById('popupOverlay').classList.add('active');
+  document.getElementById('tipPopup').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// Schließt das Tipp-Fenster
+function hideTip() {
+  document.getElementById('popupOverlay').classList.remove('active');
+  document.getElementById('tipPopup').classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+// Tippfenster mit ESC schließen
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') hideTip();
+});
