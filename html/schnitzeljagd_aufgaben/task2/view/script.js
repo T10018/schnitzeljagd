@@ -16,11 +16,5 @@ setTimeout(() => {
 }, 5000);
 
 function next() {
-// Fade-out-Effekt vor dem Seitenwechsel
-  document.body.classList.add('fade-out');
-  requestAnimationFrame(() => {
-  setTimeout(() => {
     window.location.href = "../../../speeches/speech_task2_start.html";
-  }, 500);
-  });
 }
