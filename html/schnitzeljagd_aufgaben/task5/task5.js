@@ -1,7 +1,7 @@
 // Referenzen zu HTML-Elementen
 const collectBtn = document.getElementById('collectBtn');
 const counterText = document.getElementById('counter');
-let collected = 0; // Anzahl der eingesammelten Modelle
+let collected = 2; // Anzahl der eingesammelten Modelle
 const total = 3;   // Gesamtzahl der Modelle
 
 // IDs der AR-Modelle
@@ -95,7 +95,7 @@ document.querySelector('[gps-camera]').addEventListener('gps-camera-update-posit
 setTimeout(() => {
   if (gpsLoading) gpsLoading.style.display = 'none';
   startTimer();  // Falls GPS zu lange braucht
-}, 15000);
+}, 5000);
 
 // Öffnet das Tipp-Fenster
 function showTip() {
