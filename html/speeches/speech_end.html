@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danke!</title>
+  <link rel="stylesheet" href="../../style/speech.css">
+</head>
+<body>
+
+  <img id="character" src="../../images/character1.png" alt="Charakter">
+
+  <div id="speech">Ihr habt die österreichische Armee mit Mut angeführt und Ebelsberg so gut es ging verteidigt. Nun werdet ihr woanders gebraucht.</div>
+
+  <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
+
+  <script>
+    const lines = [
+      "Ihr habt die österreichische Armee mit Mut angeführt und Ebelsberg so gut es ging verteidigt. Nun werdet ihr woanders gebraucht.", 
+      "Es war mir eine Ehre mit Ihnen zusammenarbeiten zu dürfen. Von nun an werde ich diese Truppen wieder selber anführen. ",
+      "Ebelsberg, die Soldaten und ich sind Ihnen sehr dankbar für Ihren Einsatz. Auf Wiedersehen!"
+    ];
+
+    let index = 0;
+
+    function updateSpeech() {
+      const speechElement = document.getElementById("speech");
+      const backBtn = document.getElementById("backBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      
+      // Fade-Effekt
+      speechElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        speechElement.innerHTML = lines[index];
+        speechElement.style.opacity = '1';
+      }, 200);
+      
+      backBtn.style.display = index > 0 ? "block" : "none";
+      nextBtn.innerHTML = "Weiter";
+    }
+
+    function next() {
+      if (index < lines.length - 1) {
+        index++;
+        updateSpeech();
+      } else {
+        // Fade-out-Effekt vor dem Seitenwechsel
+        document.body.classList.add('fade-out');
+        requestAnimationFrame(() => {
+        setTimeout(() => {
+          window.location.href = "speech_task1_start.html";
+        }, 500);
+        });
+      }
+    }
+
+    function previous() {
+      if (index > 0) {
+        index--;
+        updateSpeech();
+      }
+    }
+  </script>
+</body>
+</html>
