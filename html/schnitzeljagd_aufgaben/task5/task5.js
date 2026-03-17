@@ -55,11 +55,6 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-
-// ==============================================================================================================================
-// Unter clean
-// ==============================================================================================================================
-
 // Timer
 const timerElement = document.getElementById('timer');
 let secondsElapsed = 0;
