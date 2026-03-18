@@ -1,81 +1,125 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aufgabe 1</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 5</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
+
+  <!-- Rauch-Video als atmosphärisches Overlay (läuft automatisch, stumm und in Endlosschleife) -->
+  <!-- Zwei Quellen angegeben für maximale Browser-Kompatibilität (.webm bevorzugt, .mp4 als Fallback) -->
   <video id="smoke" autoplay muted loop playsinline>
     <source src="../../videos/smoke.webm" type="video/webm">
     <source src="../../videos/smoke.mp4" type="video/mp4">
   </video>
+
+  <!-- Roter Alarm-Blitz-Effekt: startet versteckt, wird per JavaScript für 3 Sekunden eingeblendet -->
+  <!-- Animation ist in der CSS-Datei als @keyframes "redFlash" definiert -->
   <div id="alarmFlash" style="display: none;"></div>
+
+  <!-- Charakter-Bild links unten – übermittelt die Alarm-Botschaft zu Beginn von Aufgabe 5 -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialogtext an (wird per JavaScript aktualisiert) -->
   <div id="speech">Feldmarschall – Alarm! Späher berichten, dass sich französische Truppen überraschend nähern. Ein Angriff war zu diesem Zeitpunkt nicht zu erwarten – wir sind nicht vorbereitet!</div>
 
+  <!-- Zurück-Button: startet versteckt, wird ab der zweiten Zeile per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und leitet am Ende zur Karten-Seite von Aufgabe 5 weiter -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+    // Array mit allen Dialogzeilen dieser Szene in der richtigen Reihenfolge
+    // Inhalt: Alarm-Situation + Aufforderung zur Brücke zu eilen (Einstieg in Aufgabe 5)
     const lines = [
+      // Erste Zeile: Alarm – unerwarteter französischer Angriff
       "Feldmarschall – Alarm! Späher berichten, dass sich französische Truppen überraschend nähern. Ein Angriff war zu diesem Zeitpunkt nicht zu erwarten – wir sind nicht vorbereitet! ",
+      // Zweite Zeile: Handlungsaufforderung – sofort zur Brücke begeben
       "Begebt euch augenblicklich vor die Brücke. Dort warten weitere Truppen auf Befehle. Jeder Atemzug zählt. Die Entscheidung fällt jetzt. "
     ];
-    /*Stellt unsere Einheiten unverzüglich auf! Die Straßen sind eng, die Häuser bieten Deckung – wenn wir schnell reagieren, können wir diesen Nachteil in einen Vorteil verwandeln. Bringt die Infanterie in Stellung, richtet die Artillerie aus und hält die Reiterei jederzeit bereit. Jeder Moment zählt! Ihr müsst jetzt handeln, Feldmarschall – der Schutz der Stadt liegt in euren Händen.*/
+    /* Auskommentierter Alternativtext: ausführlichere Version der Handlungsaufforderung
+       (Truppenaufstellung, Infanterie, Artillerie, Reiterei) – wurde durch kürzere Version ersetzt */
 
+    // Aktueller Index: gibt an, welche Zeile gerade angezeigt wird (0 = erste Zeile)
     let index = 0;
 
+    // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
     function updateSpeech() {
       const speechElement = document.getElementById("speech");
       const backBtn = document.getElementById("backBtn");
       const nextBtn = document.getElementById("nextBtn");
       
-      // Fade-Effekt
+      // Sprechblase ausblenden für weichen Übergang
       speechElement.style.opacity = '0';
       
+      // Nach 200ms neuen Text einsetzen und Sprechblase wieder einblenden
       setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
+        speechElement.innerHTML = lines[index]; // Aktuellen Dialogtext setzen
+        speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
       }, 200);
       
+      // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
       backBtn.style.display = index > 0 ? "block" : "none";
+      
+      // Weiter-Button-Beschriftung zurücksetzen
       nextBtn.innerHTML = "Weiter";
     }
 
+    // Wird beim Klick auf "Weiter" aufgerufen
     function next() {
       if (index < lines.length - 1) {
+        // Noch nicht am Ende: nächste Dialogzeile anzeigen
         index++;
         updateSpeech();
       } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
+        // Letzte Zeile erreicht: Seite mit Fade-out-Effekt verlassen
+        document.body.classList.add('fade-out'); // Startet die Ausblend-Animation (definiert in CSS)
+        
         requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.location.href = "../map/map5.html";
-        }, 500);
+          // Stellt sicher, dass der Browser die Animation rendert, bevor weitergeleitet wird
+          setTimeout(() => {
+            // Nach 500ms (= Dauer des Fade-outs) zur Kartenansicht von Aufgabe 5 weiterleiten
+            window.location.href = "../map/map5.html";
+          }, 500);
         });
       }
     }
 
+    // Wird beim Klick auf "Zurück" aufgerufen
     function previous() {
       if (index > 0) {
+        // Noch nicht am Anfang: vorherige Dialogzeile anzeigen
         index--;
         updateSpeech();
       }
     }
 
+    // Wird ausgeführt, sobald die Seite vollständig geladen ist
     window.addEventListener('load', () => {
+      // Alarm-Blitz-Effekt einblenden (roter Bildschirmblitz aus CSS-Animation)
       document.getElementById("alarmFlash").style.display = "block";
 
-      // Nach 3 Sekunden Alarm beenden
+      // Nach 3000ms (= 3 Sekunden) Alarm-Effekt wieder ausblenden
       setTimeout(() => {
         document.getElementById("alarmFlash").style.display = "none";
       }, 3000);
 
-      // Vibration
+      // Gerätevibration auslösen, falls vom Browser/Gerät unterstützt
+      // Muster: 200ms vibrieren, 100ms Pause (verstärkt den Alarm-Effekt auf Mobilgeräten)
       if (navigator.vibrate) {
         navigator.vibrate([200, 100]);
       }

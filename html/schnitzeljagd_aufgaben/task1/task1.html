@@ -1,54 +1,95 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Aufgabe 1 – Caesar-Code</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 1</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="style.css">
+  <!-- Bindet die externe CSS-Datei für das Aufgaben-Layout ein -->
 </head>
+
 <body>
-  <!-- Tipp-Button oben links -->
+
+  <!-- ===== TIPP-BUTTON (Glühbirnen-Symbol, oben links) ===== -->
+  <!-- Öffnet das Tipp-Popup per onclick="showTip()" -->
   <button class="tip-button" onclick="showTip()">
+    <!-- SVG-Glühbirnen-Icon: wird direkt als Vektorgrafik eingebettet (kein externes Bild nötig) -->
     <svg class="lightbulb" viewBox="0 0 24 24">
       <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zM9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z"/>
     </svg>
   </button>
 
-  <!-- Tipp-Popup + Overlay -->
+  <!-- ===== HINTERGRUND-OVERLAY (abdunkelnde Fläche hinter dem Popup) ===== -->
+  <!-- Klick auf das Overlay schließt das Popup per onclick="hideTip()" -->
   <div class="popup-overlay" id="popupOverlay" onclick="hideTip()"></div>
+
+  <!-- ===== TIPP-POPUP ===== -->
   <div class="tip-popup" id="tipPopup">
+    
+    <!-- Schließen-Button (X) oben rechts im Popup -->
     <button class="close-btn" onclick="hideTip()">&times;</button>
+    
+    <!-- Popup-Kopfzeile mit Icon und Titel -->
     <div class="popup-header">
+      <!-- Gleiches Glühbirnen-Icon wie im Tipp-Button, hier in Gold als Dekoration -->
       <svg class="popup-icon" viewBox="0 0 24 24">
         <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zM9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z"/>
       </svg>
       <h2 class="popup-title">Hilfreiche Tipps</h2>
     </div>
+    
+    <!-- Tipp-Inhalt: Hinweis auf die Caesar-Verschiebung um 3 Buchstaben -->
     <div class="popup-content">
       <p>Der Generalmajor befiehlt, alle Meldungen 3 Buchstaben nach vorne zu lesen.</p>
     </div>
   </div>
 
-  <!-- Hauptinhalt: Rätsel -->
+  <!-- ===== HAUPTINHALT: CAESAR-RÄTSEL ===== -->
   <div class="container">
     <h1>Caesar-Code lösen</h1>
+    
+    <!-- Verschlüsselte Botschaft: "Der Wagen im Park ist blockiert" (Caesar -3) -->
     <div class="code-box">Abo Txdbk fj Mxoh fpq yilzhfboq</div>
+    
+    <!-- Eingabefeld für die Lösung des Spielers -->
     <input type="text" id="userInput" placeholder="Deine Lösung hier eingeben">
+    
+    <!-- Feedback-Bereich: wird per JavaScript mit Erfolgs- oder Fehlermeldung befüllt -->
     <div id="feedback" class="message"></div>
   </div>
+
+  <!-- ===== VERSTECKTES FORMULAR (Datenweitergabe an den Server) ===== -->
+  <!-- Wird per JavaScript befüllt und abgeschickt – nicht direkt vom Spieler sichtbar -->
   <form id="taskForm" method="POST" action="/scripts/schnitzeljagd_aufgaben/task1.php" class="hidden">
-  <input type="hidden" name="name" id="playerName">
-  <input type="hidden" name="code" id="playerCode">
-  <input type="hidden" name="playercode" id="playerCodeHidden">
-  <input type="hidden" name="usedTip" id="usedTip" value="0">
-  <input type="hidden" name="action" id="taskAction"> <!-- solve / giveup -->
-</form>
+    <!-- Spielername (wird per JavaScript aus dem Speicher geladen) -->
+    <input type="hidden" name="name" id="playerName">
+    <!-- Lösungscode der Aufgabe -->
+    <input type="hidden" name="code" id="playerCode">
+    <!-- Spieler-Code (zur Identifikation des Spielers) -->
+    <input type="hidden" name="playercode" id="playerCodeHidden">
+    <!-- Gibt an, ob der Spieler den Tipp verwendet hat (0 = nein, 1 = ja) -->
+    <input type="hidden" name="usedTip" id="usedTip" value="0">
+    <!-- Aktion: "solve" (Aufgabe gelöst) oder "giveup" (aufgegeben) -->
+    <input type="hidden" name="action" id="taskAction">
+  </form>
 
-
-  <!-- Buttons unten rechts & links -->
+  <!-- ===== BUTTONS UNTEN ===== -->
+  <!-- Rechts: Antwort überprüfen – ruft checkAnswer() aus task1.js auf -->
   <button class="button bottom-right" onclick="checkAnswer()">Überprüfen</button>
+  
+  <!-- Links: Aufgabe überspringen – ruft skipTask() aus task1.js auf -->
   <button class="button bottom-left" onclick="skipTask()">Aufgeben</button>
 
+  <!-- Externes JavaScript für die Aufgaben-Logik (Antwortprüfung, Tipp-Anzeige, etc.) -->
   <script src="task1.js"></script>
 </body>
 </html>

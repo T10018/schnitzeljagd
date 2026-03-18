@@ -1,25 +1,54 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aufgabe 7 – Die Brücke sichern oder zerstören</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 7</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="style.css">
+  <!-- Bindet die externe CSS-Datei für das Aufgaben-Layout ein -->
 </head>
+
 <body>
-<!-- Rätselcontainer -->
-<div class="container">
-  <h1>Die Brücke sichern oder zerstören</h1>
-  <p>Wähle eine der folgenden Optionen aus...</p>
 
-  <!-- Auswahlmöglichkeiten -->
-  <label class="radio-item"><input type="radio" name="option" value="verteidigen"> Verteidigen</label>
-  <label class="radio-item"><input type="radio" name="option" value="zerstören"> Zerstören</label>
-</div>
+  <!-- ===== HAUPTINHALT: ENTSCHEIDUNGSRÄTSEL ===== -->
+  <!-- Finale Aufgabe: Spieler entscheidet über das Schicksal der Brücke -->
+  <!-- Das Ergebnis dieser Entscheidung bestimmt den Spielausgang -->
+  <div class="container">
+    <h1>Die Brücke sichern oder zerstören</h1>
+    
+    <!-- Aufgabenstellung: Spieler wählt eine von zwei taktischen Optionen -->
+    <p>Wähle eine der folgenden Optionen aus...</p>
 
-<!-- Button zum Überprüfen der Antwort -->
-<button class="button bottom-right" onclick="checkAnswer()">Weiter</button>
+    <!-- ===== RADIO-BUTTONS (Einfachauswahl) ===== -->
+    <!-- name="option" stellt sicher, dass immer nur eine Option gleichzeitig gewählt werden kann -->
 
-<script src="task7.js"></script>
+    <!-- Option 1: Brücke verteidigen – Versuch, Ebelsberg zu halten -->
+    <!-- Führt je nach bisherigen Entscheidungen zu unterschiedlichen Ausgängen -->
+    <label class="radio-item">
+      <input type="radio" name="option" value="verteidigen"> Verteidigen
+    </label>
+
+    <!-- Option 2: Brücke zerstören – gesicherter Rückzug, aber Stadt geht verloren -->
+    <label class="radio-item">
+      <input type="radio" name="option" value="zerstören"> Zerstören
+    </label>
+  </div>
+
+  <!-- ===== BUTTON RECHTS UNTEN (Weiter / Überprüfen) ===== -->
+  <!-- Ruft checkAnswer() aus task7.js auf – wertet die gewählte Option aus -->
+  <!-- Hinweis: Kein Zurück-Button auf dieser Seite – die finale Entscheidung ist unwiderruflich -->
+  <button class="button bottom-right" onclick="checkAnswer()">Weiter</button>
+
+  <!-- Externes JavaScript für die Aufgaben-Logik (Antwortprüfung, Weiterleitung, etc.) -->
+  <script src="task7.js"></script>
 </body>
 </html>

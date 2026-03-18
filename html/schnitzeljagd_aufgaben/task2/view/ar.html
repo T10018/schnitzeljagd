@@ -1,34 +1,62 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html>
+<!-- Hinweis: lang-Attribut fehlt hier (empfohlen wäre lang="de") -->
+
   <head>
-    <title>AR.js Minimal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Aufgabe 2</title>
+    <!-- Titel der Seite, erscheint im Browser-Tab -->
     
-    <!-- A-Frame (3D-Framework für WebVR/WebAR) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- Optimiert die Darstellung auf Mobilgeräten; user-scalable=no verhindert
+         manuelles Zoomen (wichtig für AR-Anwendungen, da Zoom die Kamera stört) -->
+    
+    <!-- A-Frame: JavaScript-Framework für 3D- und VR-Inhalte im Browser -->
+    <!-- Ermöglicht das Erstellen von 3D-Szenen mit einfachen HTML-Tags -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     
-    <!-- AR.js für GPS-basierte AR im Browser -->
+    <!-- AR.js: Erweiterung für A-Frame, die GPS-basierte Augmented Reality ermöglicht -->
+    <!-- Verknüpft reale GPS-Koordinaten mit virtuellen 3D-Objekten in der Kameraansicht -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
     
-    <!-- Externe CSS-Datei -->
+    <!-- Externe CSS-Datei für das Layout und die Button-Stile -->
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <!-- Ladeanzeige für GPS -->
+
+    <!-- ===== LADE-ANZEIGE (GPS-Suche) ===== -->
+    <!-- Wird angezeigt, solange das Gerät noch keinen GPS-Fix hat -->
+    <!-- Per JavaScript ausgeblendet, sobald die Position gefunden wurde -->
     <div id="gpsLoading">
       ⏳ GPS wird gesucht… Bitte kurz stillhalten
     </div>
 
-    <!-- A-Frame Szene mit AR.js und GPS-Kamera -->
+    <!-- ===== A-FRAME AR-SZENE ===== -->
+    <!-- embedded: Szene wird in die Seite eingebettet (kein Vollbild-VR-Modus) -->
+    <!-- vr-mode-ui="enabled: false": Deaktiviert den VR-Brillen-Button (nicht benötigt) -->
+    <!-- arjs: Konfiguration für AR.js -->
+    <!--   sourceType: webcam  → Kamerabild als Hintergrund der AR-Szene -->
+    <!--   videoTexture: true  → Video wird als Textur gerendert (bessere Performance) -->
+    <!--   debugUIEnabled: false → Versteckt das AR.js-Debug-Panel -->
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
-      <!-- Kamera mit GPS-Tracking -->
+      <!-- ===== GPS-KAMERA ===== -->
+      <!-- gps-camera: Verknüpft die Kamera mit dem GPS des Geräts -->
+      <!-- rotation-reader: Liest die Ausrichtung des Geräts (Kompass) aus -->
       <a-camera gps-camera rotation-reader></a-camera>
 
-      <!-- Modell 1 mit GPS-Koordinaten -->
+      <!-- ===== 3D-MODELL MIT GPS-KOORDINATEN ===== -->
+      <!-- Erscheint in der AR-Ansicht, wenn der Spieler sich den Koordinaten nähert -->
+      <!-- gps-entity-place: Legt den realen GPS-Standort des 3D-Objekts fest -->
+      <!--   latitude: geographische Breite (Linz/Ebelsberg-Bereich) -->
+      <!--   longitude: geographische Länge -->
+      <!-- gltf-model: Pfad zur 3D-Modelldatei im GLTF/GLB-Format -->
+      <!-- scale="2 2 2": Modell wird in alle drei Richtungen doppelt so groß dargestellt -->
+      <!-- animation-mixer: Aktiviert enthaltene Animationen des 3D-Modells -->
       <a-entity 
         id="model1"
         gps-entity-place="latitude: 48.222205832682114; longitude: 14.24926771655757"
@@ -37,9 +65,13 @@
         animation-mixer>
       </a-entity>
 
+      <!-- Hinweis: schließendes </a-scene>-Tag fehlt im Original -->
+
+    <!-- ===== WEITER-BUTTON (rechts unten) ===== -->
+    <!-- Ruft next() aus script.js auf – leitet zur nächsten Seite weiter -->
     <button class="button bottom-right" onclick="next()">Weiter</button>
 
-    <!-- Externe JS-Datei -->
+    <!-- Externes JavaScript für die Aufgaben-Logik (GPS-Prüfung, Weiterleitung, etc.) -->
     <script src="script.js"></script>
   </body>
 </html>

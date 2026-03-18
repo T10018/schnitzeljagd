@@ -1,86 +1,121 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aufgabe 1</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 4</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
 
+  <!-- Charakter-Bild links unten – leitet die Pulverkammer-Entscheidung (Aufgabe 4) ein -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialogtext an (wird per JavaScript aktualisiert) -->
   <div id="speech">Feldmarschall, wir haben brisante Neuigkeiten: Eine alte Pulverkammer, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt.</div>
 
+  <!-- Zurück-Button: startet versteckt, wird ab der zweiten Zeile per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und leitet am Ende zur eigentlichen Aufgaben-Seite weiter -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+  // Array mit allen Dialogzeilen dieser Szene in der richtigen Reihenfolge
+  // Inhalt: Lageberichte verschiedener Generäle als Entscheidungsgrundlage für Aufgabe 4
   const lines = [
+    // Erste Zeile: Entdeckung der Pulverkammer außerhalb der Stadt
     "Feldmarschall, wir haben brisante Neuigkeiten: Eine alte Pulverkammer, randvoll mit Schwarzpulver, steht etwas außerhalb der Stadt. ",
+    // Zweite Zeile: geschwächte Truppen, unterbrochene Kommunikation mit dem Stoßtrupp
     "Unsere Truppen sind geschwächt, sie ziehen sich zurück. Ein Stoßtrupp ist nahe genug, um das Pulver zu bergen aber die Kommunikation mit ihm ist unterbrochen. ",
+    // Dritte Zeile: Lagebericht General B. – Feind durch Morast verlangsamt (ca. 2 Tage)
     "General B. meldet, der Feind sei durch Morast im Nordwesten verlangsamt. Seine Schätzung: mindestens zwei Tage, bis die Franzosen die Stadt erreichen. ",
+    // Vierte Zeile: Lagebericht General M. – französische Reiter bereits westlich der Stadt gesichtet
     "General M. hingegen berichtet, dass französische Reiter bereits westlich der Stadt gesehen wurden, offenbar eine Vorhut abgeschnitten vom Hauptheer. ",
+    // Fünfte Zeile: Munitionslage + Hinweis auf leichte, mobile Feldkanonen des Feindes
     "Unsere Munition reicht laut Inventar noch für vier Gefechte. Der Feind führt nachweislich leichtere Feldkanonen – mobil, aber abhängig von Nachschub. "
   ];
 
-  // Default: normale Startposition
+  // Aktueller Index: gibt an, welche Zeile gerade angezeigt wird (Standard: 0 = erste Zeile)
   let index = 0;
 
+  // Wird ausgeführt, sobald die Seite vollständig geladen ist
   document.addEventListener('DOMContentLoaded', () => {
-    // Wenn wir von task4 kommen (sessionStorage-Flag), dann starte hinten
+    // Prüft ob der Spieler von task4 zurücknavigiert (sessionStorage-Flag)
+    // In diesem Fall wird die letzte Zeile direkt angezeigt, nicht die erste
     try {
       const fromTask4 = sessionStorage.getItem('fromTask4');
       if (fromTask4 === '1') {
-        index = lines.length - 1;
-        sessionStorage.removeItem('fromTask4'); // nur einmal verwenden
+        index = lines.length - 1; // Springe zur letzten Zeile
+        sessionStorage.removeItem('fromTask4'); // Flag löschen – gilt nur einmal
       }
-    } catch (e) { /* ignore */ }
+    } catch (e) { /* Fehler ignorieren, falls sessionStorage nicht verfügbar ist */ }
 
-    // erste Anzeige
+    // Erste Anzeige der Sprechblase nach dem Laden der Seite
     updateSpeech();
   });
 
+  // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
   function updateSpeech() {
     const speechElement = document.getElementById("speech");
     const backBtn = document.getElementById("backBtn");
     const nextBtn = document.getElementById("nextBtn");
 
-    // Fade-Effekt
+    // Sprechblase ausblenden für weichen Übergang
     speechElement.style.opacity = '0';
+    
+    // Nach 200ms neuen Text einsetzen und Sprechblase wieder einblenden
     setTimeout(() => {
-      speechElement.innerHTML = lines[index];
-      speechElement.style.opacity = '1';
+      speechElement.innerHTML = lines[index]; // Aktuellen Dialogtext setzen
+      speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
     }, 200);
 
-    // Back-Button nur anzeigen, wenn index > 0 (wie vorher)
+    // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
     backBtn.style.display = index > 0 ? "block" : "none";
 
-    // Button-Text anpassen (optional)
+    // Weiter-Button-Beschriftung (bleibt immer "Weiter", könnte für letzten Schritt angepasst werden)
     nextBtn.innerHTML = index < lines.length - 1 ? "Weiter" : "Weiter";
   }
 
+  // Wird beim Klick auf "Weiter" aufgerufen
   function next() {
     if (index < lines.length - 1) {
+      // Noch nicht am Ende: nächste Dialogzeile anzeigen
       index++;
       updateSpeech();
     } else {
-      // Weiter zur Aufgabe (wie gehabt) mit Fade
-      document.body.classList.add('fade-out');
+      // Letzte Zeile erreicht: Seite mit Fade-out-Effekt verlassen
+      document.body.classList.add('fade-out'); // Startet die Ausblend-Animation (definiert in CSS)
+      
       requestAnimationFrame(() => {
+        // Stellt sicher, dass der Browser die Animation rendert, bevor weitergeleitet wird
         setTimeout(() => {
+          // Nach 500ms (= Dauer des Fade-outs) zur Aufgaben-Seite (task4.html) weiterleiten
           window.location.href = "../schnitzeljagd_aufgaben/task4/task4.html";
         }, 500);
       });
     }
   }
 
+  // Wird beim Klick auf "Zurück" aufgerufen
   function previous() {
     if (index > 0) {
+      // Noch nicht am Anfang: vorherige Dialogzeile anzeigen
       index--;
       updateSpeech();
     }
-    }
+  }
   </script>
 </body>
 </html>

@@ -1,61 +1,98 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aufgabe 1</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 7</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
+
+  <!-- Charakter-Bild links unten – reflektiert den moralisch zwiespältigen Spielausgang
+       (Brücke gebrannt, Feind gestoppt, aber Stadt in Flammen) -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialogtext an (wird per JavaScript aktualisiert) -->
   <div id="speech">Ihr habt die Brücke niederbrennen lassen und damit den Feind gestoppt, doch zu welchem Preis? </div>
 
+  <!-- Zurück-Button: startet versteckt, wird ab der zweiten Zeile per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und leitet am Ende zur finalen Abschluss-Seite weiter -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+    // Array mit allen Dialogzeilen dieser Szene in der richtigen Reihenfolge
+    // Inhalt: moralisch ambivalentes Spielende – taktischer Erfolg (Feind gestoppt),
+    //         aber hoher Preis (Stadt brennt, bleibendes Trauma)
     const lines = [
+      // Erste Zeile: rhetoische Frage – Erfolg ja, aber zu welchem Preis?
       "Ihr habt die Brücke niederbrennen lassen und damit den Feind gestoppt, doch zu welchem Preis? ",
+      // Zweite Zeile: Bilanz des Endes – Rückzug geglückt, aber Stadt in Flammen,
+      //               Zweifel ob es einen besseren Weg gegeben hätte
       "Der Rückzug ist gelungen, doch das Feuer frisst sich durch Ebelsberg, als Zeichen unseres Verlusts. Es war notwendig, ja… aber vielleicht hätte es einen anderen Weg gegeben. Die Narben dieses Tages werden bleiben. "
     ];
 
+    // Aktueller Index: gibt an, welche Zeile gerade angezeigt wird (0 = erste Zeile)
     let index = 0;
 
+    // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
     function updateSpeech() {
       const speechElement = document.getElementById("speech");
       const backBtn = document.getElementById("backBtn");
       const nextBtn = document.getElementById("nextBtn");
       
-      // Fade-Effekt
+      // Sprechblase ausblenden für weichen Übergang
       speechElement.style.opacity = '0';
       
+      // Nach 200ms neuen Text einsetzen und Sprechblase wieder einblenden
       setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
+        speechElement.innerHTML = lines[index]; // Aktuellen Dialogtext setzen
+        speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
       }, 200);
       
+      // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
       backBtn.style.display = index > 0 ? "block" : "none";
+      
+      // Weiter-Button-Beschriftung zurücksetzen
       nextBtn.innerHTML = "Weiter";
     }
 
+    // Wird beim Klick auf "Weiter" aufgerufen
     function next() {
       if (index < lines.length - 1) {
+        // Noch nicht am Ende: nächste Dialogzeile anzeigen
         index++;
         updateSpeech();
       } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
+        // Letzte Zeile erreicht: Spiel abgeschlossen – Seite mit Fade-out-Effekt verlassen
+        document.body.classList.add('fade-out'); // Startet die Ausblend-Animation (definiert in CSS)
+        
         requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.location.href = "speech_end.html";
-        }, 500);
+          // Stellt sicher, dass der Browser die Animation rendert, bevor weitergeleitet wird
+          setTimeout(() => {
+            // Nach 500ms (= Dauer des Fade-outs) zur finalen Abschluss-Seite weiterleiten
+            window.location.href = "speech_end.html";
+          }, 500);
         });
       }
     }
 
+    // Wird beim Klick auf "Zurück" aufgerufen
     function previous() {
       if (index > 0) {
+        // Noch nicht am Anfang: vorherige Dialogzeile anzeigen
         index--;
         updateSpeech();
       }

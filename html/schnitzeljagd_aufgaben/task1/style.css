@@ -1,156 +1,264 @@
+/* ===== GRUNDLAYOUT (html) ===== */
 html {
     background: linear-gradient(135deg, #2c1810, #6b4423);
-}
-html, body {
-    overflow: hidden;
-    height: 100%;
-    margin: 0;
-    font-family: 'Crimson Text', serif;
-    position: relative;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* Diagonaler Farbverlauf in dunklen Brauntönen als Seitenhintergrund */
 }
 
-/* Hintergrundmuster-Effekt */
+html, body {
+    overflow: hidden;        /* Verhindert Scrollbalken */
+    height: 100%;            /* Volle Höhe des Viewports */
+    margin: 0;               /* Entfernt den Standard-Außenabstand des Browsers */
+    font-family: 'Crimson Text', serif; /* Serif-Schrift für mittelalterliches Flair */
+    position: relative;      /* Ermöglicht absolute Positionierung von Kindelementen */
+    padding: 1rem;           /* Innenabstand rundherum */
+    display: flex;           /* Flexbox aktivieren für einfache Zentrierung */
+    flex-direction: column;  /* Kindelemente untereinander anordnen */
+    justify-content: center; /* Vertikal zentrieren */
+    align-items: center;     /* Horizontal zentrieren */
+}
+
+/* ===== HINTERGRUND-TEXTUR (Pseudo-Element) ===== */
 body::before {
-    content: '';
-    position: fixed;
+    content: '';             /* Pflichtfeld: Pseudo-Element braucht einen Inhalt (auch leer) */
+    position: fixed;         /* Bleibt beim Scrollen an der gleichen Position */
     top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100%; height: 100%; /* Füllt den gesamten Viewport aus */
     background-image: radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 25%),
                       radial-gradient(circle at 75% 75%, rgba(160, 82, 45, 0.1) 0%, transparent 25%);
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: 1;
+    /* Zwei kreisförmige Farbverläufe erzeugen eine subtile Textur */
+    background-size: 200px 200px; /* Kachelgröße der Hintergrundtextur */
+    pointer-events: none;    /* Pseudo-Element nimmt keine Maus-/Touch-Events entgegen */
+    z-index: 1;              /* Liegt über dem Hintergrund, aber unter den Hauptelementen */
 }
 
+/* ===== INHALTS-CONTAINER ===== */
 .container {
-    text-align: center;
-    max-width: 90%;
-    color: #f4f1e8;
-    position: relative;
-    z-index: 1;
+    text-align: center;      /* Text horizontal zentrieren */
+    max-width: 90%;          /* Maximale Breite = 90% des Elternelements */
+    color: #f4f1e8;          /* Helles Cremeweiß als Textfarbe */
+    position: relative;      /* Für z-index notwendig */
+    z-index: 1;              /* Liegt über dem Hintergrund-Pseudo-Element */
 }
 
+/* ===== ÜBERSCHRIFT ===== */
 h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #f4f1e8;
+    font-size: 1.5rem;       /* Schriftgröße der Hauptüberschrift */
+    margin-bottom: 1rem;     /* Abstand nach unten zur nächsten Sektion */
+    color: #f4f1e8;          /* Helles Cremeweiß passend zum Gesamtdesign */
 }
 
+/* ===== CODE-BOX (Aufgaben-Anzeige) ===== */
 .code-box {
-    background: linear-gradient(145deg, #2c1810, #4a3728);
-    padding: 1rem;
-    margin: 1rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-                inset 0 2px 5px rgba(255, 255, 255, 0.1),
-                inset 0 -2px 5px rgba(139, 69, 19, 0.2);
-    border: 2px solid #8b4513;
-    font-size: 1.2rem;
-    color: #f4f1e8;
-    position: relative;
-    z-index: 2;
+    background: linear-gradient(145deg, #2c1810, #4a3728); /* Dunkler Farbverlauf als Hintergrund */
+    padding: 1rem;           /* Innenabstand für Lesbarkeit */
+    margin: 1rem;            /* Außenabstand zur Trennung von anderen Elementen */
+    border-radius: 15px;     /* Abgerundete Ecken */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),        /* Äußerer Schatten für Tiefenwirkung */
+                inset 0 2px 5px rgba(255, 255, 255, 0.1), /* Innerer heller Schatten (Lichteffekt oben) */
+                inset 0 -2px 5px rgba(139, 69, 19, 0.2); /* Innerer dunkler Schatten (Tiefeneffekt unten) */
+    border: 2px solid #8b4513; /* Rahmen in Sattelbraun passend zum Gesamtdesign */
+    font-size: 1.2rem;       /* Leicht vergrößerte Schrift für gute Lesbarkeit */
+    color: #f4f1e8;          /* Helles Cremeweiß als Textfarbe */
+    position: relative;      /* Für z-index notwendig */
+    z-index: 2;              /* Liegt über dem Hintergrund-Pseudo-Element */
 }
 
+/* ===== EINGABEFELD ===== */
 input {
-    width: 94%;
-    padding: 0.6rem;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: 2px solid #8b4513;
-    background-color: #fdf9f3;
-    color: #2c1810;
-    margin-bottom: 1rem;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    width: 94%;              /* Fast volle Breite der Code-Box */
+    padding: 0.6rem;         /* Innenabstand für angenehme Bedienung */
+    font-size: 1rem;         /* Standard-Schriftgröße */
+    border-radius: 10px;     /* Abgerundete Ecken */
+    border: 2px solid #8b4513; /* Rahmen in Sattelbraun passend zum Gesamtdesign */
+    background-color: #fdf9f3; /* Heller Hintergrund für guten Kontrast zum dunklen Text */
+    color: #2c1810;          /* Dunkle Textfarbe für Lesbarkeit auf hellem Hintergrund */
+    margin-bottom: 1rem;     /* Abstand nach unten zum nächsten Element */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* Leichter innerer Schatten für Eingedrückt-Effekt */
 }
 
-/* Buttons */
+/* ===== ALLGEMEINE BUTTON-STILE ===== */
 .button {
-    position: fixed;
-    padding: 1rem 1rem;
-    letter-spacing: 1px;
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    border: 3px solid #8b4513;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    color: #f4f1e8;
-    z-index: 10;
-    transition: background 0.3s ease;
+    position: fixed;         /* Buttons bleiben immer an der gleichen Bildschirmposition */
+    padding: 1rem 1rem;      /* Gleicher Innenabstand oben/unten und links/rechts */
+    letter-spacing: 1px;     /* Leichter Buchstabenabstand für dekorativen Look */
+    font-family: 'Cinzel', serif; /* Antike Serif-Schrift für historischen Stil */
+    font-size: 1.1rem;       /* Leicht vergrößerte Schrift */
+    text-transform: uppercase; /* Buchstaben automatisch in Großbuchstaben */
+    border: 3px solid #8b4513; /* Brauner Rahmen passend zum Gesamtdesign */
+    border-radius: 15px;     /* Abgerundete Ecken */
+    cursor: pointer;         /* Mauszeiger als Hand-Symbol beim Überfahren */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Leichter Schatten für 3D-Effekt */
+    color: #f4f1e8;          /* Helle Textfarbe */
+    z-index: 10;             /* Liegt über allen anderen Elementen */
+    transition: background 0.3s ease; /* Weicher Übergang beim Hover-Effekt */
 }
 
-/* Rechte untere Ecke */
+/* ===== BUTTON RECHTS UNTEN (z.B. "Weiter" / "Bestätigen") ===== */
 .bottom-right {
     bottom: 30px;
-    right: 30px;
-    background: linear-gradient(145deg, #b8860b, #daa520);
+    right: 30px;             /* Positionierung: rechts unten mit 30px Abstand */
+    background: linear-gradient(145deg, #b8860b, #daa520); /* Goldener Farbverlauf */
 }
 .bottom-right:hover {
-    background: linear-gradient(145deg, #daa520, #b8860b);
+    background: linear-gradient(145deg, #daa520, #b8860b); /* Umgekehrter Gradient beim Hover */
 }
 
-/* Linke untere Ecke */
+/* ===== BUTTON LINKS UNTEN (z.B. "Zurück") ===== */
 .bottom-left {
     bottom: 30px;
-    left: 30px;
-    background: linear-gradient(145deg, #696969, #808080);
+    left: 30px;              /* Positionierung: links unten mit 30px Abstand */
+    background: linear-gradient(145deg, #696969, #808080); /* Grauer Farbverlauf (sekundärer Button) */
 }
 .bottom-left:hover {
-    background: linear-gradient(145deg, #808080, #696969);
+    background: linear-gradient(145deg, #808080, #696969); /* Umgekehrter Gradient beim Hover */
 }
 
-/* Nachricht */
+/* ===== FEEDBACK-NACHRICHT (z.B. Fehler- oder Erfolgsmeldung) ===== */
 .message {
-    /*margin-top: 0.5rem;*/
-    font-weight: bold;
-    color: #ffcccc;
+    /*margin-top: 0.5rem;*/  /* Auskommentiert: optionaler Abstand nach oben */
+    font-weight: bold;       /* Fettschrift für bessere Sichtbarkeit */
+    color: #ffcccc;          /* Helles Rot für Fehlermeldungen */
 }
 
-/* Optional: fade-out Klasse */
+/* ===== AUSBLEND-ANIMATION ===== */
 .fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    opacity: 0;              /* Element wird unsichtbar */
+    transition: opacity 0.5s ease; /* Weicher Übergang über 0,5 Sekunden */
 }
 
-/* Tipp-Button oben links */
-.tip-button{position:fixed;top:20px;left:20px;width:60px;height:60px;background:linear-gradient(145deg,#ffd700,#ffed4e);border:none;border-radius:50%;cursor:pointer;box-shadow:0 8px 20px rgba(255,215,0,0.3);transition:all 0.3s ease;z-index:1000;display:flex;align-items:center;justify-content:center}
-.tip-button:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(255,215,0,0.4)}
-.lightbulb{width:28px;height:28px;fill:#333;transition:transform 0.3s ease}
-.tip-button:hover .lightbulb{transform:scale(1.1)}
-
-/* Popup-Fenster */
-.tip-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:#fff;border-radius:15px;padding:25px;max-width:90vw;width:350px;max-height:80vh;box-shadow:0 15px 30px rgba(0,0,0,0.2);z-index:1001;transition:all 0.3s ease;opacity:0;overflow-y:auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;box-sizing:border-box}
-.tip-popup.active{transform:translate(-50%,-50%) scale(1);opacity:1}
-.popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;opacity:0;visibility:hidden;transition:all 0.3s ease}
-.popup-overlay.active{opacity:1;visibility:visible}
-
-/* Inhalt im Popup */
-.popup-header{display:flex;align-items:center;margin:0 0 15px 0;padding:0 0 10px 0;border-bottom:1px solid #eee}
-.popup-icon{width:30px;height:30px;margin-right:10px;fill:#ffd700}
-.popup-title{font-size:20px;font-weight:600;color:#333}
-.popup-content{line-height:1.5;color:#555;font-size:15px}
-.popup-content p{margin:0 0 12px 0}
-.popup-content ul{margin:0 0 12px 18px}
-.popup-content li{margin:0 0 6px 0}
-.close-btn{position:absolute;top:10px;right:15px;background:none;border:none;font-size:24px;color:#999;cursor:pointer;transition:color 0.3s ease}
-.close-btn:hover{color:#333}
-
-/* Responsive Design */
-@media(max-width:768px){
-.tip-button{width:55px;height:55px;top:15px;left:15px}
-.lightbulb{width:25px;height:25px}
-.tip-popup{width:95vw;padding:20px;max-height:85vh}
-.popup-title{font-size:18px}
-.popup-content{font-size:14px}
+/* ===== TIPP-BUTTON (Glühbirne, oben links) ===== */
+.tip-button {
+    position: fixed;         /* Fixiert im Viewport */
+    top: 20px; left: 20px;  /* Positionierung: oben links mit 20px Abstand */
+    width: 60px; height: 60px; /* Runde Schaltfläche (60×60px) */
+    background: linear-gradient(145deg, #ffd700, #ffed4e); /* Goldgelber Farbverlauf */
+    border: none;            /* Kein Rahmen */
+    border-radius: 50%;      /* Kreis-Form */
+    cursor: pointer;         /* Mauszeiger als Hand-Symbol */
+    box-shadow: 0 8px 20px rgba(255,215,0,0.3); /* Goldener Schatten */
+    transition: all 0.3s ease; /* Weiche Übergänge für alle Eigenschaften */
+    z-index: 1000;           /* Liegt über nahezu allen anderen Elementen */
+    display: flex;           /* Flexbox für einfache Zentrierung des Icons */
+    align-items: center;     /* Vertikal zentrieren */
+    justify-content: center; /* Horizontal zentrieren */
 }
-@media(max-width:480px){
-.tip-button{width:50px;height:50px;top:10px;left:10px}
-.lightbulb{width:22px;height:22px}
-.tip-popup{padding:18px;max-height:90vh}
+.tip-button:hover {
+    transform: translateY(-2px); /* Button hebt sich beim Hover leicht nach oben */
+    box-shadow: 0 12px 25px rgba(255,215,0,0.4); /* Verstärkter Schatten beim Hover */
+}
+
+/* ===== GLÜHBIRNEN-ICON ===== */
+.lightbulb {
+    width: 28px; height: 28px; /* Größe des SVG-Icons */
+    fill: #333;              /* Dunkle Füllfarbe für guten Kontrast auf gelbem Hintergrund */
+    transition: transform 0.3s ease; /* Weicher Übergang für Hover-Animation */
+}
+.tip-button:hover .lightbulb {
+    transform: scale(1.1);   /* Icon wird beim Hover leicht vergrößert */
+}
+
+/* ===== TIPP-POPUP (erscheint beim Klick auf die Glühbirne) ===== */
+.tip-popup {
+    position: fixed;         /* Fixiert im Viewport */
+    top: 50%; left: 50%;    /* Ausgangspunkt für Zentrierung per transform */
+    transform: translate(-50%,-50%) scale(0); /* Zentriert und initial unsichtbar (scale 0) */
+    background: #fff;        /* Weißer Hintergrund für gute Lesbarkeit */
+    border-radius: 15px;     /* Abgerundete Ecken */
+    padding: 25px;           /* Innenabstand für Luftigkeit */
+    max-width: 90vw;         /* Maximale Breite = 90% des Viewports */
+    width: 350px;            /* Standardbreite des Popups */
+    max-height: 80vh;        /* Maximale Höhe = 80% des Viewports */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* Weicher Schatten für Tiefenwirkung */
+    z-index: 1001;           /* Liegt über dem Overlay und allen anderen Elementen */
+    transition: all 0.3s ease; /* Weiche Ein-/Ausblend-Animation */
+    opacity: 0;              /* Initial unsichtbar */
+    overflow-y: auto;        /* Scrollbar bei zu viel Inhalt */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* System-Schrift für moderne Lesbarkeit */
+    box-sizing: border-box;  /* Padding wird in die Gesamtbreite eingerechnet */
+}
+.tip-popup.active {
+    transform: translate(-50%,-50%) scale(1); /* Popup eingeblendet und in Originalgröße */
+    opacity: 1;              /* Voll sichtbar */
+}
+
+/* ===== HINTERGRUND-OVERLAY (abdunkelnde Fläche hinter dem Popup) ===== */
+.popup-overlay {
+    position: fixed;         /* Fixiert im Viewport */
+    top: 0; left: 0;
+    width: 100%; height: 100%; /* Deckt den gesamten Bildschirm ab */
+    background: rgba(0,0,0,0.5); /* Halbtransparentes Schwarz (50% Deckkraft) */
+    z-index: 1000;           /* Liegt unter dem Popup, aber über dem restlichen Inhalt */
+    opacity: 0;              /* Initial unsichtbar */
+    visibility: hidden;      /* Initial aus dem Tab-Order und Accessibility entfernt */
+    transition: all 0.3s ease; /* Weiche Ein-/Ausblend-Animation */
+}
+.popup-overlay.active {
+    opacity: 1;              /* Overlay voll sichtbar */
+    visibility: visible;     /* Overlay wieder zugänglich */
+}
+
+/* ===== POPUP-KOPFZEILE ===== */
+.popup-header {
+    display: flex;           /* Icon und Titel nebeneinander */
+    align-items: center;     /* Vertikal zentrieren */
+    margin: 0 0 15px 0;     /* Abstand nach unten zum Inhalt */
+    padding: 0 0 10px 0;    /* Innenabstand nach unten */
+    border-bottom: 1px solid #eee; /* Trennlinie zwischen Header und Inhalt */
+}
+.popup-icon {
+    width: 30px; height: 30px; /* Größe des Header-Icons */
+    margin-right: 10px;      /* Abstand zwischen Icon und Titel */
+    fill: #ffd700;           /* Goldene Füllfarbe für das Icon */
+}
+.popup-title {
+    font-size: 20px;         /* Schriftgröße des Popup-Titels */
+    font-weight: 600;        /* Halbfett für gute Sichtbarkeit */
+    color: #333;             /* Dunkle Textfarbe */
+}
+
+/* ===== POPUP-INHALT ===== */
+.popup-content {
+    line-height: 1.5;        /* Zeilenabstand für angenehme Lesbarkeit */
+    color: #555;             /* Mittelgraue Textfarbe */
+    font-size: 15px;         /* Standard-Schriftgröße für den Fließtext */
+}
+.popup-content p {
+    margin: 0 0 12px 0;     /* Abstand nach unten zwischen Absätzen */
+}
+.popup-content ul {
+    margin: 0 0 12px 18px;  /* Außenabstand + Einrückung der Aufzählungsliste */
+}
+.popup-content li {
+    margin: 0 0 6px 0;      /* Abstand zwischen einzelnen Listenpunkten */
+}
+
+/* ===== SCHLIEßEN-BUTTON (X oben rechts im Popup) ===== */
+.close-btn {
+    position: absolute;      /* Relativ zum Popup positioniert */
+    top: 10px; right: 15px; /* Positionierung: oben rechts mit Abstand */
+    background: none;        /* Kein Hintergrund */
+    border: none;            /* Kein Rahmen */
+    font-size: 24px;         /* Große Schrift für gute Klickbarkeit */
+    color: #999;             /* Grau im Normalzustand */
+    cursor: pointer;         /* Mauszeiger als Hand-Symbol */
+    transition: color 0.3s ease; /* Weicher Farbübergang beim Hover */
+}
+.close-btn:hover {
+    color: #333;             /* Dunkler beim Hover für visuelles Feedback */
+}
+
+/* ===== RESPONSIVE DESIGN – TABLET (max. 768px Breite) ===== */
+@media (max-width: 768px) {
+    .tip-button { width: 55px; height: 55px; top: 15px; left: 15px; } /* Button etwas kleiner */
+    .lightbulb { width: 25px; height: 25px; }                          /* Icon entsprechend kleiner */
+    .tip-popup { width: 95vw; padding: 20px; max-height: 85vh; }       /* Popup nutzt fast volle Breite */
+    .popup-title { font-size: 18px; }                                   /* Kleinere Überschrift */
+    .popup-content { font-size: 14px; }                                 /* Kleinerer Fließtext */
+}
+
+/* ===== RESPONSIVE DESIGN – SMARTPHONE (max. 480px Breite) ===== */
+@media (max-width: 480px) {
+    .tip-button { width: 50px; height: 50px; top: 10px; left: 10px; } /* Button noch kleiner */
+    .lightbulb { width: 22px; height: 22px; }                          /* Icon noch kleiner */
+    .tip-popup { padding: 18px; max-height: 90vh; }                    /* Mehr Höhe für kleine Screens */
 }
