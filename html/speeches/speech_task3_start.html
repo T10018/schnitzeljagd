@@ -1,62 +1,95 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aufgabe 1</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 3</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
 
+  <!-- Charakter-Bild links unten – leitet die Routenplanungs-Aufgabe (Aufgabe 3) ein -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialogtext an (wird per JavaScript aktualisiert) -->
   <div id="speech">Feldmarschall, wir müssen einen Boten für Unterstützung entsenden. Jedoch werden unsere Boten abgefangen und die Zeit drängt. Wir vermuten feindliche Späher in der Umgebung. </div>
 
+  <!-- Zurück-Button: startet versteckt, wird ab der zweiten Zeile per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und leitet am Ende zur eigentlichen Aufgaben-Seite weiter -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+    // Array mit allen Dialogzeilen dieser Szene in der richtigen Reihenfolge
+    // Inhalt: Einführung in die Routenplanungs-Aufgabe – Boten werden abgefangen,
+    //         der Spieler muss die sicherste Route für den Reiter wählen
     const lines = [
       "Feldmarschall, wir müssen einen Boten für Unterstützung entsenden. Jedoch werden unsere Boten abgefangen und die Zeit drängt. Wir vermuten feindliche Späher in der Umgebung. ",
+      // Zweite Zeile: Hinweis auf die Konsequenz einer Fehlentscheidung bei der Routenwahl
       "Nur durch eine strategisch günstige Route kann unser Reiter die beste Unterstützung besorgen. Doch wägt klug ab - nur ein Fehler und wir verlieren unsere Chance auf Unterstützung. "
     ];
 
+    // Aktueller Index: gibt an, welche Zeile gerade angezeigt wird (0 = erste Zeile)
     let index = 0;
 
+    // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
     function updateSpeech() {
       const speechElement = document.getElementById("speech");
       const backBtn = document.getElementById("backBtn");
       const nextBtn = document.getElementById("nextBtn");
       
-      // Fade-Effekt
+      // Sprechblase ausblenden für weichen Übergang
       speechElement.style.opacity = '0';
       
+      // Nach 200ms neuen Text einsetzen und Sprechblase wieder einblenden
       setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
+        speechElement.innerHTML = lines[index]; // Aktuellen Dialogtext setzen
+        speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
       }, 200);
       
+      // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
       backBtn.style.display = index > 0 ? "block" : "none";
+      
+      // Weiter-Button-Beschriftung zurücksetzen
       nextBtn.innerHTML = "Weiter";
     }
 
+    // Wird beim Klick auf "Weiter" aufgerufen
     function next() {
       if (index < lines.length - 1) {
+        // Noch nicht am Ende: nächste Dialogzeile anzeigen
         index++;
         updateSpeech();
       } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
+        // Letzte Zeile erreicht: Seite mit Fade-out-Effekt verlassen
+        document.body.classList.add('fade-out'); // Startet die Ausblend-Animation (definiert in CSS)
+        
         requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.location.href = "../schnitzeljagd_aufgaben/task3/task3.html";
-        }, 500);
+          // Stellt sicher, dass der Browser die Animation rendert, bevor weitergeleitet wird
+          setTimeout(() => {
+            // Nach 500ms (= Dauer des Fade-outs) zur Aufgaben-Seite (task3.html) weiterleiten
+            window.location.href = "../schnitzeljagd_aufgaben/task3/task3.html";
+          }, 500);
         });
       }
     }
 
+    // Wird beim Klick auf "Zurück" aufgerufen
     function previous() {
       if (index > 0) {
+        // Noch nicht am Anfang: vorherige Dialogzeile anzeigen
         index--;
         updateSpeech();
       }

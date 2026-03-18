@@ -1,63 +1,94 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" gibt an, dass die Seite auf Deutsch ist (wichtig für Barrierefreiheit & SEO) -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute (ä, ö, ü) und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Verhindert Zoom-Probleme auf Mobilgeräten: Breite = Gerätebreite, Zoom-Faktor = 1 -->
+  
   <title>Danke!</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
 
+  <!-- Charakter-Bild links unten (Position wird über CSS gesteuert) -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialog-Text an -->
   <div id="speech">Ihr habt die österreichische Armee mit Mut angeführt und Ebelsberg so gut es ging verteidigt. Nun werdet ihr woanders gebraucht.</div>
 
+  <!-- Zurück-Button: startet versteckt (display:none), wird per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und wechselt am Ende zur nächsten Seite -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+    // Array mit allen Dialogzeilen in der richtigen Reihenfolge
     const lines = [
       "Ihr habt die österreichische Armee mit Mut angeführt und Ebelsberg so gut es ging verteidigt. Nun werdet ihr woanders gebraucht.", 
       "Es war mir eine Ehre mit Ihnen zusammenarbeiten zu dürfen. Von nun an werde ich diese Truppen wieder selber anführen. ",
       "Ebelsberg, die Soldaten und ich sind Ihnen sehr dankbar für Ihren Einsatz. Auf Wiedersehen!"
     ];
 
+    // Aktueller Index: zeigt an, welche Zeile gerade angezeigt wird (startet bei 0 = erste Zeile)
     let index = 0;
 
+    // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
     function updateSpeech() {
       const speechElement = document.getElementById("speech");
       const backBtn = document.getElementById("backBtn");
       const nextBtn = document.getElementById("nextBtn");
       
-      // Fade-Effekt
+      // Sprechblase ausblenden (Opacity auf 0) für weichen Übergang
       speechElement.style.opacity = '0';
       
+      // Nach 200ms (= Dauer der Ausblend-Animation) neuen Text einsetzen und wieder einblenden
       setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
+        speechElement.innerHTML = lines[index]; // Neuen Dialogtext setzen
+        speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
       }, 200);
       
+      // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
       backBtn.style.display = index > 0 ? "block" : "none";
+      
+      // Weiter-Button-Beschriftung zurücksetzen
       nextBtn.innerHTML = "Weiter";
     }
 
+    // Wird beim Klick auf "Weiter" aufgerufen
     function next() {
       if (index < lines.length - 1) {
+        // Noch nicht am Ende: nächste Zeile anzeigen
         index++;
         updateSpeech();
       } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
+        // Letzte Zeile erreicht: Seite mit Fade-out-Effekt verlassen
+        document.body.classList.add('fade-out'); // CSS-Klasse fügt Ausblend-Animation hinzu
+        
         requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.location.href = "https://napoleondiplomarbeit.infinityfreeapp.com";
-        }, 500);
+          // requestAnimationFrame stellt sicher, dass der Browser die Animation startet,
+          // bevor der Seitenwechsel eingeleitet wird
+          setTimeout(() => {
+            // Nach 500ms (= Dauer des Fade-outs) zur Startseite weiterleiten
+            window.location.href = "https://napoleondiplomarbeit.infinityfreeapp.com";
+          }, 500);
         });
       }
     }
 
+    // Wird beim Klick auf "Zurück" aufgerufen
     function previous() {
       if (index > 0) {
+        // Noch nicht am Anfang: vorherige Zeile anzeigen
         index--;
         updateSpeech();
       }

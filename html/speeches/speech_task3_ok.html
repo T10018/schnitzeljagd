@@ -1,63 +1,98 @@
 <!DOCTYPE html>
+<!-- Definiert den Dokumenttyp als HTML5 -->
 <html lang="de">
+<!-- lang="de" kennzeichnet die Seite als deutschsprachig -->
+
 <head>
   <meta charset="UTF-8">
+  <!-- Zeichenkodierung UTF-8: unterstützt Umlaute und Sonderzeichen -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aufgabe 1</title>
+  <!-- Optimiert die Darstellung auf Mobilgeräten -->
+  
+  <title>Aufgabe 3</title>
+  <!-- Titel der Seite, erscheint im Browser-Tab -->
+  
   <link rel="stylesheet" href="../../style/speech.css">
+  <!-- Bindet die externe CSS-Datei ein (zwei Verzeichnisse höher) -->
 </head>
+
 <body>
 
+  <!-- Charakter-Bild links unten – lobt die richtige Routenwahl (östlicher Weg nach Enns) -->
   <img id="character" src="../../images/character1.png" alt="Charakter">
 
+  <!-- Sprechblase: zeigt den aktuellen Dialogtext an (wird per JavaScript aktualisiert) -->
   <div id="speech">Klug gewählt, Feldmarschall. Der östliche Weg führt durch bewaldetes Gelände nach Enns über viele Brücken. </div>
 
+  <!-- Zurück-Button: startet versteckt, wird ab der zweiten Zeile per JavaScript eingeblendet -->
   <button class="button bottom-left" onclick="previous()" id="backBtn" style="display: none;">Zurück</button>
+  
+  <!-- Weiter-Button: startet sichtbar und leitet am Ende zur Karten-Seite von Aufgabe 3 weiter -->
   <button class="button bottom-right" onclick="next()" id="nextBtn">Weiter</button>
 
   <script>
+    // Array mit allen Dialogzeilen dieser Szene in der richtigen Reihenfolge
+    // Inhalt: positives Feedback zur richtigen Routenwahl (östlicher Weg) 
+    //         + strategische Konsequenz (Brückensprengung als Rückzugsoption)
+    //         + Überleitung zur nächsten Aufgabe
     const lines = [
       "Klug gewählt, Feldmarschall. Der östliche Weg führt durch bewaldetes Gelände nach Enns über viele Brücken. ",
+      // Zweite Zeile: positive Konsequenz – Bote erreicht Ziel, Truppen bereiten Brückensprengung vor
       "Der Bote konnte das Ziel erreichen und die dortigen Truppen informieren, diese bereiten die Sprengung der Brücken im Falle des Rückzugs vor. ",
+      // Dritte Zeile: Hinweis auf neue Entdeckung der Soldaten + Aufforderung weiterzumachen
       "Ein Bote berichtet das unsere Soldaten eine wichtige Entdeckung gemacht haben. Eilt nun weiter.  Die Schlacht wartet nicht auf jene, die zögern. "
     ];
 
+    // Aktueller Index: gibt an, welche Zeile gerade angezeigt wird (0 = erste Zeile)
     let index = 0;
 
+    // Aktualisiert die Sprechblase und die Button-Sichtbarkeit passend zum aktuellen Index
     function updateSpeech() {
       const speechElement = document.getElementById("speech");
       const backBtn = document.getElementById("backBtn");
       const nextBtn = document.getElementById("nextBtn");
       
-      // Fade-Effekt
+      // Sprechblase ausblenden für weichen Übergang
       speechElement.style.opacity = '0';
       
+      // Nach 200ms neuen Text einsetzen und Sprechblase wieder einblenden
       setTimeout(() => {
-        speechElement.innerHTML = lines[index];
-        speechElement.style.opacity = '1';
+        speechElement.innerHTML = lines[index]; // Aktuellen Dialogtext setzen
+        speechElement.style.opacity = '1';      // Sprechblase wieder einblenden
       }, 200);
       
+      // Zurück-Button nur anzeigen, wenn nicht auf der ersten Zeile
       backBtn.style.display = index > 0 ? "block" : "none";
+      
+      // Weiter-Button-Beschriftung zurücksetzen
       nextBtn.innerHTML = "Weiter";
     }
 
+    // Wird beim Klick auf "Weiter" aufgerufen
     function next() {
       if (index < lines.length - 1) {
+        // Noch nicht am Ende: nächste Dialogzeile anzeigen
         index++;
         updateSpeech();
       } else {
-        // Fade-out-Effekt vor dem Seitenwechsel
-        document.body.classList.add('fade-out');
+        // Letzte Zeile erreicht: Seite mit Fade-out-Effekt verlassen
+        document.body.classList.add('fade-out'); // Startet die Ausblend-Animation (definiert in CSS)
+        
         requestAnimationFrame(() => {
-        setTimeout(() => {
-          window.location.href = "../map/map3.html";
-        }, 500);
+          // Stellt sicher, dass der Browser die Animation rendert, bevor weitergeleitet wird
+          setTimeout(() => {
+            // Nach 500ms (= Dauer des Fade-outs) zur Kartenansicht von Aufgabe 3 weiterleiten
+            window.location.href = "../map/map3.html";
+          }, 500);
         });
       }
     }
 
+    // Wird beim Klick auf "Zurück" aufgerufen
     function previous() {
       if (index > 0) {
+        // Noch nicht am Anfang: vorherige Dialogzeile anzeigen
         index--;
         updateSpeech();
       }

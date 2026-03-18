@@ -1,125 +1,136 @@
+/* ===== GRUNDLAYOUT (body) ===== */
 body {
-    margin: 0;
-    font-family: 'Crimson Text', serif;
-    background: linear-gradient(135deg, #2c1810, #6b4423);
-    min-height: 100vh;
-    overflow: hidden;
-    position: relative;
+    margin: 0; /* Entfernt den Standard-Außenabstand des Browsers */
+    font-family: 'Crimson Text', serif; /* Setzt die Schriftart auf eine Serif-Schrift für mittelalterliches Flair */
+    background: linear-gradient(135deg, #2c1810, #6b4423); /* Diagonaler Farbverlauf in dunklen Brauntönen als Hintergrund */
+    min-height: 100vh; /* Mindesthöhe = volle Viewport-Höhe, damit der Hintergrund immer sichtbar ist */
+    overflow: hidden; /* Verhindert Scrollbalken und versteckt überlaufende Inhalte */
+    position: relative; /* Ermöglicht absolute Positionierung von Kindelementen */
 }
 
+/* ===== HINTERGRUND-TEXTUR (Pseudo-Element) ===== */
 body::before {
-    content: '';
-    position: fixed;
+    content: ''; /* Pflichtfeld: Ohne Inhalt wird das Pseudo-Element nicht gerendert */
+    position: fixed; /* Bleibt beim Scrollen an der gleichen Position */
     top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100%; height: 100%; /* Füllt den gesamten Viewport aus */
     background-image: radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 25%),
                     radial-gradient(circle at 75% 75%, rgba(160, 82, 45, 0.1) 0%, transparent 25%);
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: 1;
+    /* Zwei kreisförmige Farbverläufe erzeugen eine subtile Textur */
+    background-size: 200px 200px; /* Legt die Kachelgröße der Hintergrundtextur fest */
+    pointer-events: none; /* Pseudo-Element nimmt keine Maus-/Touch-Events entgegen */
+    z-index: 1; /* Liegt über dem Hintergrund, aber unter den Hauptelementen */
 }
 
+/* ===== CHARAKTER-BILD ===== */
 #character {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 55vh;
-    max-height: 500px;
+    position: fixed; /* Fixiert das Bild im Viewport, unabhängig vom Scrollen */
+    bottom: 0; /* Am unteren Rand ausrichten */
+    left: 0; /* Am linken Rand ausrichten */
+    height: 55vh; /* Höhe = 55% der Viewport-Höhe für responsives Verhalten */
+    max-height: 500px; /* Maximale Höhe, damit das Bild auf großen Bildschirmen nicht zu groß wird */
 }
 
+/* ===== SPRECHBLASE ===== */
 #speech {
-    position: fixed;
-    top: 5vh;
+    position: fixed; /* Bleibt beim Scrollen an der gleichen Bildschirmposition */
+    top: 5vh; /* Abstand vom oberen Rand = 5% der Viewport-Höhe */
     left: 1rem;
-    right: 1rem;
-    margin: 0 auto;
-    padding: 1rem;
-    background: linear-gradient(145deg, #2c1810, #4a3728);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-            inset 0 2px 5px rgba(255, 255, 255, 0.1),
-            inset 0 -2px 5px rgba(139, 69, 19, 0.2);
-    border: 2px solid #8b4513;
-    border-radius: 20px;
-    max-width: 80%;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: #f4f1e8;
-    transition: opacity 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    right: 1rem; /* Links und rechts gleicher Abstand für horizontale Zentrierung */
+    margin: 0 auto; /* Automatischer Außenabstand zentriert das Element horizontal */
+    padding: 1rem; /* Innenabstand für Lesbarkeit des Textes */
+    background: linear-gradient(145deg, #2c1810, #4a3728); /* Dunkler Farbverlauf als Hintergrund der Sprechblase */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),        /* Äußerer Schatten für Tiefenwirkung */
+            inset 0 2px 5px rgba(255, 255, 255, 0.1),   /* Innerer heller Schatten oben (Lichteffekt) */
+            inset 0 -2px 5px rgba(139, 69, 19, 0.2);   /* Innerer dunkler Schatten unten (Tiefeneffekt) */
+    border: 2px solid #8b4513; /* Rahmen in Sattelbraun für mittelalterliche Optik */
+    border-radius: 20px; /* Abgerundete Ecken */
+    max-width: 80%; /* Maximale Breite = 80% des Elternelements */
+    font-size: 1.1rem; /* Leicht vergrößerte Schrift für bessere Lesbarkeit */
+    line-height: 1.5; /* Zeilenabstand für angenehme Lesbarkeit */
+    color: #f4f1e8; /* Helles Cremeweiß als Textfarbe (guter Kontrast zum dunklen Hintergrund) */
+    transition: opacity 0.3s ease; /* Weicher Übergang beim Ein-/Ausblenden */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Überschreibt den oberen box-shadow mit einem einfacheren Schatten */
 }
 
+/* ===== SPRECHBLASEN-RAHMEN (Pseudo-Element) ===== */
 #speech::before {
-    content: '';
-    position: absolute;
-    top: -8px; left: -8px; right: -8px; bottom: -8px;
-    background: linear-gradient(45deg, #8b4513, #a0522d, #8b4513);
-    border-radius: 25px;
-    z-index: -1;
+    content: ''; /* Pflichtfeld für Pseudo-Elemente */
+    position: absolute; /* Relativ zum Elternelement (#speech) positioniert */
+    top: -8px; left: -8px; right: -8px; bottom: -8px; /* Leicht größer als die Sprechblase (erzeugt Rahmeneffekt) */
+    background: linear-gradient(45deg, #8b4513, #a0522d, #8b4513); /* Goldbrauner Farbverlauf als dekorativer Außenrahmen */
+    border-radius: 25px; /* Ecken etwas stärker abgerundet als die Sprechblase selbst */
+    z-index: -1; /* Hinter der Sprechblase gerendert */
 }
 
+/* ===== ALLGEMEINE BUTTON-STILE ===== */
 .button {
-    position: fixed;
-    padding: 1rem 1.5rem;
-    letter-spacing: 1px;
-    font-family: 'Cinzel', serif;
+    position: fixed; /* Buttons bleiben immer an der gleichen Bildschirmposition */
+    padding: 1rem 1.5rem; /* Innenabstand: oben/unten 1rem, links/rechts 1.5rem */
+    letter-spacing: 1px; /* Leichter Buchstabenabstand für dekorativen Look */
+    font-family: 'Cinzel', serif; /* Antike Serif-Schrift für den historischen Stil */
     font-size: 1.1rem;
-    text-transform: uppercase;
-    border: 3px solid #8b4513;
-    border-radius: 15px;
-    
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    color: #f4f1e8;
-    z-index: 10;
+    text-transform: uppercase; /* Buchstaben werden automatisch in Großbuchstaben umgewandelt */
+    border: 3px solid #8b4513; /* Brauner Rahmen passend zum Gesamtdesign */
+    border-radius: 15px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeigt den Mauszeiger als Hand-Symbol an */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Leichter Schatten für 3D-Effekt */
+    color: #f4f1e8; /* Helle Textfarbe */
+    z-index: 10; /* Liegt über anderen Elementen */
 }
 
+/* ===== BUTTON RECHTS UNTEN (z.B. "Weiter") ===== */
 .bottom-right {
     bottom: 30px;
-    right: 30px;
-    background: linear-gradient(145deg, #b8860b, #daa520);
+    right: 30px; /* Positionierung: rechts unten mit 30px Abstand */
+    background: linear-gradient(145deg, #b8860b, #daa520); /* Goldener Farbverlauf */
 }
 .bottom-right:hover {
-    background: linear-gradient(145deg, #daa520, #b8860b);
+    background: linear-gradient(145deg, #daa520, #b8860b); /* Umgekehrter Gradient beim Hover für Klick-Feedback */
 }
 
+/* ===== BUTTON LINKS UNTEN (z.B. "Zurück") ===== */
 .bottom-left {
     bottom: 30px;
-    left: 30px;
-    background: linear-gradient(145deg, #696969, #808080);
+    left: 30px; /* Positionierung: links unten mit 30px Abstand */
+    background: linear-gradient(145deg, #696969, #808080); /* Grauer Farbverlauf (neutraler/sekundärer Button) */
 }
 .bottom-left:hover {
-    background: linear-gradient(145deg, #808080, #696969);
+    background: linear-gradient(145deg, #808080, #696969); /* Umgekehrter Gradient beim Hover */
 }
 
+/* ===== AUSBLEND-ANIMATION ===== */
 .fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    opacity: 0; /* Element wird unsichtbar */
+    transition: opacity 0.5s ease; /* Weicher Übergang über 0,5 Sekunden */
 }
 
+/* ===== RAUCH-/VIDEO-OVERLAY ===== */
 #smoke {
-  position: fixed;
+  position: fixed; /* Fixiert im Viewport */
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  object-fit: cover;              /* <<< passt Video ohne Verzerrung an */
-  z-index: 5;
-  pointer-events: none;           /* <<< macht es "unsichtbar" für Klicks */
-  opacity: 0.4;                   /* <<< je nach Effektwunsch */
-  mix-blend-mode: screen;        /* <<< nützlich bei dunklem Hintergrund */
+  height: 100vh; /* Volle Bildschirmgröße */
+  object-fit: cover; /* Video wird ohne Verzerrung skaliert und zentriert */
+  z-index: 5; /* Liegt über dem Hintergrund, aber unter den Buttons */
+  pointer-events: none; /* Klicks gehen durch das Video-Element hindurch */
+  opacity: 0.4; /* Halbtransparent, damit der Hintergrund durchscheint */
+  mix-blend-mode: screen; /* Hellt dunkle Bereiche auf – ideal für Rauch-Effekte auf dunklem Hintergrund */
 }
 
+/* ===== ROTE BLITZ-ANIMATION (Alarm-Effekt) ===== */
 @keyframes redFlash {
-  0%, 100% { background-color: transparent; }
-  50% { background-color: rgba(255, 0, 0, 0.3); }
+  0%, 100% { background-color: transparent; } /* Start und Ende: unsichtbar */
+  50% { background-color: rgba(255, 0, 0, 0.3); } /* Mitte: halbtransparentes Rot */
 }
 
 #alarmFlash {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  pointer-events: none;
-  animation: redFlash 0.5s ease-in-out infinite;
+  height: 100vh; /* Überdeckt den gesamten Bildschirm */
+  z-index: 10; /* Liegt über den meisten anderen Elementen */
+  pointer-events: none; /* Blockiert keine Benutzerinteraktionen */
+  animation: redFlash 0.5s ease-in-out infinite; /* Rote Blitz-Animation läuft dauerhaft in 0,5-Sekunden-Intervallen */
 }
