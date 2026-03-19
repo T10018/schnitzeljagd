@@ -1,290 +1,267 @@
-/* Vollbild-Hintergrund */
+/* ===== GRUNDLAYOUT (html & body) ===== */
 html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  height: 100%;
-  background: black;
-  font-family: sans-serif;
+  margin: 0;           /* Entfernt den Standard-Außenabstand des Browsers */
+  padding: 0;          /* Entfernt den Standard-Innenabstand des Browsers */
+  overflow: hidden;    /* Verhindert Scrollbalken – wichtig für Vollbild-AR */
+  height: 100%;        /* Volle Höhe des Viewports */
+  background: black;   /* Schwarzer Hintergrund, während die AR-Kamera lädt */
+  font-family: sans-serif; /* Serifenlose Schrift als Standard */
 }
 
-/* A-Frame Szene nimmt gesamten Bildschirm ein */
+/* ===== A-FRAME SZENE (AR-Vollbild) ===== */
+/* Die A-Frame Szene wird als absolut positioniertes Element über die gesamte Seite gelegt */
 a-scene {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: absolute;  /* Relativ zum nächsten positionierten Elternelement */
+  width: 100%;         /* Volle Breite des Viewports */
+  height: 100%;        /* Volle Höhe des Viewports */
 }
 
-/* HUD: zentrierter Button am unteren Bildschirmrand */
+/* ===== HUD (Head-Up-Display) ===== */
+/* Container für den Einsammel-Button, zentriert am unteren Bildschirmrand */
 #hud {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  text-align: center;
-  pointer-events: none;
-  width: 100%;
+  position: fixed;         /* Fixiert im Viewport – bleibt beim Scrollen sichtbar */
+  bottom: 20px;            /* 20px Abstand vom unteren Rand */
+  left: 50%;               /* Ausgangspunkt für horizontale Zentrierung */
+  transform: translateX(-50%); /* Exakte Zentrierung per negativem Versatz */
+  z-index: 10;             /* Liegt über der AR-Szene */
+  text-align: center;      /* Text im HUD zentrieren */
+  pointer-events: none;    /* HUD-Container selbst nimmt keine Klicks entgegen... */
+  width: 100%;             /* Volle Breite für korrekte Zentrierung */
   font-family: sans-serif;
 }
 
-/* Einheitlicher Stil für HUD-Boxen */
+/* ===== HUD-BOX (gemeinsamer Stil für Timer und Counter) ===== */
 .hudBox {
-  background: rgba(0,0,0,0.6);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  pointer-events: auto;
-  z-index: 11;
+  background: rgba(0,0,0,0.6); /* Halbtransparenter schwarzer Hintergrund */
+  color: white;            /* Weißer Text für guten Kontrast */
+  padding: 8px 14px;       /* Innenabstand für Luftigkeit */
+  border-radius: 8px;      /* Leicht abgerundete Ecken */
+  font-size: 16px;         /* Gut lesbare Schriftgröße */
+  pointer-events: auto;    /* ...aber HUD-Boxen nehmen Klicks entgegen */
+  z-index: 11;             /* Liegt über dem HUD-Container */
   font-family: sans-serif;
 }
 
-/* Timer zentriert oben */
+/* ===== TIMER (oben zentriert) ===== */
 #timer {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;         /* Fixiert im Viewport */
+  top: 20px;               /* 20px Abstand vom oberen Rand */
+  left: 50%;               /* Ausgangspunkt für horizontale Zentrierung */
+  transform: translateX(-50%); /* Exakte Zentrierung */
 }
 
-/* Counter rechts oben */
+/* ===== ZÄHLER (oben rechts) ===== */
+/* Zeigt eingesammelte / gesamte Dorfbewohner an (z.B. "2 / 3") */
 #counter {
-  position: fixed;
-  top: 20px;
-  right: 20px;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 20px;               /* 20px Abstand vom oberen Rand */
+  right: 20px;             /* 20px Abstand vom rechten Rand */
 }
 
-/* Einsammel-Button */
+/* ===== EINSAMMEL-BUTTON ===== */
 #collectBtn {
-  padding: 14px 28px;
-  font-size: 18px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: black;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  cursor: pointer;
-  pointer-events: auto;
-  transition: background 0.3s;
+  padding: 14px 28px;      /* Großzügiger Innenabstand für leichte Bedienung */
+  font-size: 18px;         /* Gut lesbare Schriftgröße */
+  background-color: rgba(255, 255, 255, 0.9); /* Fast weißer, leicht transparenter Hintergrund */
+  color: black;            /* Schwarzer Text für guten Kontrast */
+  border: none;            /* Kein Rahmen */
+  border-radius: 12px;     /* Stark abgerundete Ecken */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Schatten für 3D-Effekt */
+  cursor: pointer;         /* Mauszeiger als Hand-Symbol */
+  pointer-events: auto;    /* Klicks werden entgegengenommen (überschreibt HUD pointer-events: none) */
+  transition: background 0.3s; /* Weicher Übergang beim Hover */
 }
-
-/* Hover-Effekt für Button */
 #collectBtn:hover {
-  background-color: white;
+  background-color: white; /* Voll weißer Hintergrund beim Hover */
 }
 
-/* Fortschrittsanzeige oben rechts */
+/* ===== FORTSCHRITTSANZEIGE (oben rechts, detailliert) ===== */
+/* Hinweis: #counter wird hier ein zweites Mal definiert – überschreibt die erste Definition -->
+/* Sinnvoller wäre es, beide Definitionen zusammenzuführen */
 #counter {
   position: fixed;
   top: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  pointer-events: auto;
-  z-index: 11;
+  right: 20px;             /* Positionierung: oben rechts mit 20px Abstand */
+  background: rgba(0,0,0,0.6); /* Halbtransparenter schwarzer Hintergrund */
+  color: white;            /* Weißer Text */
+  padding: 8px 14px;       /* Innenabstand */
+  border-radius: 8px;      /* Abgerundete Ecken */
+  font-size: 16px;         /* Gut lesbare Schriftgröße */
+  pointer-events: auto;    /* Klicks werden entgegengenommen */
+  z-index: 11;             /* Liegt über der AR-Szene */
   font-family: sans-serif;
 }
 
-/* Schwarzer Ladebildschirm bei GPS-Suche */
+/* ===== GPS-LADEBILDSCHIRM ===== */
+/* Überlagert den gesamten Bildschirm, solange GPS noch keine Position hat */
 #gpsLoading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 18px;
-  z-index: 100;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 0; left: 0;
+  width: 100vw;            /* Volle Viewport-Breite */
+  height: 100vh;           /* Volle Viewport-Höhe */
+  background: black;       /* Schwarzer Hintergrund verdeckt alles darunter */
+  color: white;            /* Weißer Text für guten Kontrast */
+  display: flex;           /* Flexbox für einfache Zentrierung */
+  align-items: center;     /* Vertikal zentrieren */
+  justify-content: center; /* Horizontal zentrieren */
+  text-align: center;      /* Text innerhalb des Elements zentrieren */
+  font-size: 18px;         /* Gut lesbare Schriftgröße */
+  z-index: 100;            /* Liegt über allen anderen Elementen */
   font-family: sans-serif;
 }
 
-/* Endbildschirm nach Erfolg */
+/* ===== ENDBILDSCHIRM (erscheint nach Fund aller Modelle) ===== */
+/* Initial versteckt (display: none), wird per JavaScript auf "flex" gesetzt */
 #endScreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.95);
-  color: white;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 0; left: 0;
+  width: 100vw;            /* Volle Viewport-Breite */
+  height: 100vh;           /* Volle Viewport-Höhe */
+  background: rgba(0,0,0,0.95); /* Fast vollständig schwarzer Hintergrund */
+  color: white;            /* Weißer Text */
+  display: none;           /* Initial versteckt – wird per JavaScript eingeblendet */
+  align-items: center;     /* Vertikal zentrieren (wirkt erst wenn display: flex) */
+  justify-content: center; /* Horizontal zentrieren */
+  flex-direction: column;  /* Inhalte untereinander anordnen */
+  text-align: center;      /* Text zentrieren */
   font-family: sans-serif;
-  z-index: 1000;
+  z-index: 1000;           /* Liegt über nahezu allen anderen Elementen */
 }
 
-/* Button im Endbildschirm */
+/* ===== BUTTON IM ENDBILDSCHIRM ===== */
 #endScreen button {
-  margin-top: 20px;
-  padding: 12px 24px;
-  font-size: 16px;
-  background: white;
-  color: black;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  margin-top: 20px;        /* Abstand nach oben zum Text */
+  padding: 12px 24px;      /* Innenabstand für angenehme Klickfläche */
+  font-size: 16px;         /* Gut lesbare Schriftgröße */
+  background: white;       /* Weißer Hintergrund */
+  color: black;            /* Schwarzer Text für guten Kontrast */
+  border: none;            /* Kein Rahmen */
+  border-radius: 8px;      /* Abgerundete Ecken */
+  cursor: pointer;         /* Mauszeiger als Hand-Symbol */
 }
 
-/* Tipp-Button */
+/* ===== TIPP-BUTTON (Glühbirne, oben links) ===== */
 .tip-button {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(145deg, #ffd700, #ffed4e);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
-  transition: 0.3s;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 20px; left: 20px;  /* Positionierung: oben links mit 20px Abstand */
+  width: 60px; height: 60px; /* Runde Schaltfläche (60×60px) */
+  background: linear-gradient(145deg, #ffd700, #ffed4e); /* Goldgelber Farbverlauf */
+  border: none;            /* Kein Rahmen */
+  border-radius: 50%;      /* Kreis-Form */
+  cursor: pointer;         /* Mauszeiger als Hand-Symbol */
+  box-shadow: 0 8px 20px rgba(255,215,0,0.3); /* Goldener Schatten */
+  transition: 0.3s;        /* Weiche Übergänge (ohne spezifische Eigenschaft = alle) */
+  z-index: 1000;           /* Liegt über nahezu allen anderen Elementen */
+  display: flex;           /* Flexbox für einfache Zentrierung des Icons */
+  align-items: center;     /* Vertikal zentrieren */
+  justify-content: center; /* Horizontal zentrieren */
 }
 .tip-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px); /* Button hebt sich beim Hover leicht nach oben */
+  box-shadow: 0 12px 25px rgba(255,215,0,0.4); /* Verstärkter Schatten beim Hover */
 }
+
+/* ===== GLÜHBIRNEN-ICON ===== */
 .lightbulb {
-  width: 28px;
-  height: 28px;
-  fill: #333;
-  transition: transform 0.3s ease;
+  width: 28px; height: 28px; /* Größe des SVG-Icons */
+  fill: #333;              /* Dunkle Füllfarbe für guten Kontrast auf gelbem Hintergrund */
+  transition: transform 0.3s ease; /* Weicher Übergang für Hover-Animation */
 }
 .tip-button:hover .lightbulb {
-  transform: scale(1.1);
+  transform: scale(1.1);   /* Icon wird beim Hover leicht vergrößert */
 }
 
-/* Popup für Tipps */
+/* ===== TIPP-POPUP ===== */
 .tip-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  width: 350px;
-  max-width: 80%;
-  max-height: 80vh;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-  transition: 0.3s;
-  opacity: 0;
-  overflow-y: auto;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 50%; left: 50%;    /* Ausgangspunkt für Zentrierung per transform */
+  transform: translate(-50%, -50%) scale(0); /* Zentriert und initial unsichtbar (scale 0) */
+  background: white;       /* Weißer Hintergrund für gute Lesbarkeit */
+  border-radius: 15px;     /* Abgerundete Ecken */
+  padding: 25px;           /* Innenabstand für Luftigkeit */
+  width: 350px;            /* Standardbreite des Popups */
+  max-width: 80%;          /* Maximale Breite = 80% des Viewports */
+  max-height: 80vh;        /* Maximale Höhe = 80% des Viewports */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* Weicher Schatten für Tiefenwirkung */
+  z-index: 1001;           /* Liegt über dem Overlay und allen anderen Elementen */
+  transition: 0.3s;        /* Weiche Ein-/Ausblend-Animation */
+  opacity: 0;              /* Initial unsichtbar */
+  overflow-y: auto;        /* Scrollbar bei zu viel Inhalt */
 }
 .tip-popup.active {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
+  transform: translate(-50%, -50%) scale(1); /* Popup eingeblendet und in Originalgröße */
+  opacity: 1;              /* Voll sichtbar */
 }
+
+/* ===== HINTERGRUND-OVERLAY ===== */
 .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
+  position: fixed;         /* Fixiert im Viewport */
+  top: 0; left: 0;
+  width: 100%; height: 100%; /* Deckt den gesamten Bildschirm ab */
+  background: rgba(0,0,0,0.5); /* Halbtransparentes Schwarz (50% Deckkraft) */
+  z-index: 1000;           /* Liegt unter dem Popup, aber über dem restlichen Inhalt */
+  opacity: 0;              /* Initial unsichtbar */
+  visibility: hidden;      /* Initial aus dem Tab-Order und Accessibility entfernt */
+  transition: 0.3s;        /* Weiche Ein-/Ausblend-Animation */
 }
 .popup-overlay.active {
-  opacity: 1;
-  visibility: visible;
+  opacity: 1;              /* Overlay voll sichtbar */
+  visibility: visible;     /* Overlay wieder zugänglich */
 }
+
+/* ===== POPUP-KOPFZEILE ===== */
 .popup-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  display: flex;           /* Icon und Titel nebeneinander */
+  align-items: center;     /* Vertikal zentrieren */
+  margin-bottom: 15px;     /* Abstand nach unten zum Inhalt */
+  border-bottom: 1px solid #eee; /* Trennlinie zwischen Header und Inhalt */
 }
 .popup-icon {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-  fill: #ffd700;
+  width: 30px; height: 30px; /* Größe des Header-Icons */
+  margin-right: 10px;      /* Abstand zwischen Icon und Titel */
+  fill: #ffd700;           /* Goldene Füllfarbe für das Icon */
 }
 .popup-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 20px;         /* Schriftgröße des Popup-Titels */
+  font-weight: 600;        /* Halbfett für gute Sichtbarkeit */
 }
+
+/* ===== POPUP-INHALT ===== */
 .popup-content {
-  line-height: 1.5;
-  color: #555;
-  font-size: 15px;
+  line-height: 1.5;        /* Zeilenabstand für angenehme Lesbarkeit */
+  color: #555;             /* Mittelgraue Textfarbe */
+  font-size: 15px;         /* Standard-Schriftgröße für den Fließtext */
 }
-.popup-content p, .popup-content li, .popup-content ul {
-  margin: 0 0 12px 0;
-}
+/* Einheitlicher Abstand nach unten für alle Inhaltselemente im Popup */
+.popup-content p,
+.popup-content li,
+.popup-content ul { margin: 0 0 12px 0; }
 
-/* Schließen-Button im Popup */
+/* ===== SCHLIEßEN-BUTTON (X oben rechts im Popup) ===== */
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #999;
-  cursor: pointer;
-  transition: color 0.3s ease;
+  position: absolute;      /* Relativ zum Popup positioniert */
+  top: 10px; right: 15px; /* Positionierung: oben rechts mit Abstand */
+  background: none;        /* Kein Hintergrund */
+  border: none;            /* Kein Rahmen */
+  font-size: 24px;         /* Große Schrift für gute Klickbarkeit */
+  color: #999;             /* Grau im Normalzustand */
+  cursor: pointer;         /* Mauszeiger als Hand-Symbol */
+  transition: color 0.3s ease; /* Weicher Farbübergang beim Hover */
 }
-.close-btn:hover {
-  color: #333;
+.close-btn:hover { color: #333; } /* Dunkler beim Hover für visuelles Feedback */
+
+/* ===== RESPONSIVE DESIGN – TABLET (max. 768px Breite) ===== */
+@media (max-width: 768px) {
+  .tip-button { width: 55px; height: 55px; top: 15px; left: 15px; } /* Button etwas kleiner */
+  .lightbulb { width: 25px; height: 25px; }                          /* Icon entsprechend kleiner */
+  .tip-popup { width: 95vw; padding: 20px; max-height: 85vh; }       /* Popup nutzt fast volle Breite */
+  .popup-title { font-size: 18px; }                                   /* Kleinere Überschrift */
+  .popup-content { font-size: 14px; }                                 /* Kleinerer Fließtext */
 }
 
-/* Mobilanpassungen */
-@media (max-width: 768px) {
-  .tip-button {
-    width: 55px;
-    height: 55px;
-    top: 15px;
-    left: 15px;
-  }
-  .lightbulb {
-    width: 25px;
-    height: 25px;
-  }
-  .tip-popup {
-    width: 95vw;
-    padding: 20px;
-    max-height: 85vh;
-  }
-  .popup-title {
-    font-size: 18px;
-  }
-  .popup-content {
-    font-size: 14px;
-  }
-}
+/* ===== RESPONSIVE DESIGN – SMARTPHONE (max. 480px Breite) ===== */
 @media (max-width: 480px) {
-  .tip-button {
-    width: 50px;
-    height: 50px;
-    top: 10px;
-    left: 10px;
-  }
-  .lightbulb {
-    width: 22px;
-    height: 22px;
-  }
-  .tip-popup {
-    padding: 18px;
-    max-height: 90vh;
-  }
+  .tip-button { width: 50px; height: 50px; top: 10px; left: 10px; } /* Button noch kleiner */
+  .lightbulb { width: 22px; height: 22px; }                          /* Icon noch kleiner */
+  .tip-popup { padding: 18px; max-height: 90vh; }                    /* Mehr Höhe für kleine Screens */
 }

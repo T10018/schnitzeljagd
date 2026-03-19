@@ -1,97 +1,104 @@
+/* ===== GRUNDLAYOUT (html) ===== */
 html {
     background: linear-gradient(135deg, #2c1810, #6b4423);
-    height: 100%;
-}
-html, body {
-    overflow: hidden;
-    height: 100%;
-    margin: 0;
-    font-family: 'Crimson Text', serif;
-    position: relative;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* Diagonaler Farbverlauf in dunklen Brauntönen als Seitenhintergrund */
+    height: 100%; /* Volle Höhe des Viewports */
 }
 
-/* Hintergrundmuster-Effekt */
+html, body {
+    overflow: hidden;        /* Verhindert Scrollbalken */
+    height: 100%;            /* Volle Höhe des Viewports */
+    margin: 0;               /* Entfernt den Standard-Außenabstand des Browsers */
+    font-family: 'Crimson Text', serif; /* Serif-Schrift für mittelalterliches Flair */
+    position: relative;      /* Ermöglicht absolute Positionierung von Kindelementen */
+    padding: 1rem;           /* Innenabstand rundherum */
+    display: flex;           /* Flexbox aktivieren für einfache Zentrierung */
+    flex-direction: column;  /* Kindelemente untereinander anordnen */
+    justify-content: center; /* Vertikal zentrieren */
+    align-items: center;     /* Horizontal zentrieren */
+}
+
+/* ===== HINTERGRUND-TEXTUR (Pseudo-Element) ===== */
 body::before {
-    content: '';
-    position: fixed;
+    content: '';             /* Pflichtfeld: Pseudo-Element braucht einen Inhalt (auch leer) */
+    position: fixed;         /* Bleibt beim Scrollen an der gleichen Position */
     top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100%; height: 100%; /* Füllt den gesamten Viewport aus */
     background-image: radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 25%),
                       radial-gradient(circle at 75% 75%, rgba(160, 82, 45, 0.1) 0%, transparent 25%);
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: 1;
+    /* Zwei kreisförmige Farbverläufe erzeugen eine subtile Hintergrundtextur */
+    background-size: 200px 200px; /* Kachelgröße der Hintergrundtextur */
+    pointer-events: none;    /* Pseudo-Element nimmt keine Maus-/Touch-Events entgegen */
+    z-index: 1;              /* Liegt über dem Hintergrund, aber unter den Hauptelementen */
 }
 
-/* Titel */
+/* ===== ÜBERSCHRIFT ===== */
 h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #f4f1e8;
+    font-size: 1.5rem;       /* Schriftgröße der Hauptüberschrift */
+    margin-bottom: 1rem;     /* Abstand nach unten zur nächsten Sektion */
+    color: #f4f1e8;          /* Helles Cremeweiß passend zum Gesamtdesign */
 }
 
-/* Hauptcontainer für Inhalte */
+/* ===== HAUPTCONTAINER (Aufgaben-Box) ===== */
 .container {
-  text-align: center;
-  max-width: 100%;
-  background: linear-gradient(145deg, #2c1810, #4a3728);
-    padding: 1rem;
-    margin: 1rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
-                inset 0 2px 5px rgba(255, 255, 255, 0.1),
-                inset 0 -2px 5px rgba(139, 69, 19, 0.2);
-    border: 2px solid #8b4513;
-    font-size: 1rem;
-    color: #f4f1e8;
-    position: relative;
-    z-index: 1;
+    text-align: center;      /* Text horizontal zentrieren */
+    max-width: 100%;         /* Volle verfügbare Breite nutzen */
+    background: linear-gradient(145deg, #2c1810, #4a3728); /* Dunkler Farbverlauf als Hintergrund */
+    padding: 1rem;           /* Innenabstand für Luftigkeit */
+    margin: 1rem;            /* Außenabstand zur Trennung von anderen Elementen */
+    border-radius: 15px;     /* Abgerundete Ecken */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),          /* Äußerer Schatten für Tiefenwirkung */
+                inset 0 2px 5px rgba(255, 255, 255, 0.1), /* Innerer heller Schatten (Lichteffekt oben) */
+                inset 0 -2px 5px rgba(139, 69, 19, 0.2);  /* Innerer dunkler Schatten (Tiefeneffekt unten) */
+    border: 2px solid #8b4513; /* Rahmen in Sattelbraun passend zum Gesamtdesign */
+    font-size: 1rem;         /* Standard-Schriftgröße */
+    color: #f4f1e8;          /* Helles Cremeweiß als Textfarbe */
+    position: relative;      /* Für z-index notwendig */
+    z-index: 1;              /* Liegt über dem Hintergrund-Pseudo-Element */
 }
 
-/* Checkbox-Stil */
+/* ===== RADIO-BUTTON-ZEILE (einzelne Auswahlmöglichkeit) ===== */
+/* Hinweis: Klassen-Kommentar sagt "Checkbox", tatsächlich werden hier Radio-Buttons verwendet */
 .radio-item {
-  display: flex;
-  align-items: center;
-  padding: 0.75em;
-  border-bottom: 1px solid #ddd;
-  font-size: 1.2em;
+    display: flex;           /* Radio-Button und Text nebeneinander */
+    align-items: center;     /* Vertikal zentrieren */
+    padding: 0.75em;         /* Innenabstand für angenehme Klickfläche */
+    border-bottom: 1px solid #ddd; /* Trennlinie zwischen den Optionen */
+    font-size: 1.2em;        /* Leicht vergrößerte Schrift für bessere Lesbarkeit */
 }
 .radio-item:last-child {
-  border-bottom: none;
+    border-bottom: none;     /* Letzte Zeile hat keine Trennlinie nach unten */
 }
+
+/* ===== RADIO-BUTTON-ELEMENT ===== */
 input[type="radio"] {
-  transform: scale(1.5);
-  margin-right: 1em;
+    transform: scale(1.5);   /* Radio-Button auf 150% vergrößert für bessere Bedienbarkeit auf Mobilgeräten */
+    margin-right: 1em;       /* Abstand zwischen Radio-Button und Beschriftungstext */
 }
 
-/* Buttons */
+/* ===== ALLGEMEINE BUTTON-STILE ===== */
 .button {
-    position: fixed;
-    padding: 1rem 1rem;
-    letter-spacing: 1px;
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    border: 3px solid #8b4513;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    color: #f4f1e8;
-    z-index: 10;
-    transition: background 0.3s ease;
+    position: fixed;         /* Buttons bleiben immer an der gleichen Bildschirmposition */
+    padding: 1rem 1rem;      /* Gleicher Innenabstand oben/unten und links/rechts */
+    letter-spacing: 1px;     /* Leichter Buchstabenabstand für dekorativen Look */
+    font-family: 'Cinzel', serif; /* Antike Serif-Schrift für historischen Stil */
+    font-size: 1.1rem;       /* Leicht vergrößerte Schrift */
+    text-transform: uppercase; /* Buchstaben automatisch in Großbuchstaben */
+    border: 3px solid #8b4513; /* Brauner Rahmen passend zum Gesamtdesign */
+    border-radius: 15px;     /* Abgerundete Ecken */
+    cursor: pointer;         /* Mauszeiger als Hand-Symbol beim Überfahren */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Leichter Schatten für 3D-Effekt */
+    color: #f4f1e8;          /* Helle Textfarbe */
+    z-index: 10;             /* Liegt über allen anderen Elementen */
+    transition: background 0.3s ease; /* Weicher Übergang beim Hover-Effekt */
 }
 
-/* Rechte untere Ecke */
+/* ===== BUTTON RECHTS UNTEN (z.B. "Weiter") ===== */
 .bottom-right {
     bottom: 20px;
-    right: 20px;
-    background: linear-gradient(145deg, #b8860b, #daa520);
+    right: 20px;             /* Positionierung: rechts unten mit 20px Abstand */
+    background: linear-gradient(145deg, #b8860b, #daa520); /* Goldener Farbverlauf */
 }
 .bottom-right:hover {
-    background: linear-gradient(145deg, #daa520, #b8860b);
+    background: linear-gradient(145deg, #daa520, #b8860b); /* Umgekehrter Gradient beim Hover */
 }

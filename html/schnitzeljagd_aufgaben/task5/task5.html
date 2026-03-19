@@ -6,6 +6,7 @@
   <head>
     <title>Aufgabe 5</title>
     <!-- Titel der Seite, erscheint im Browser-Tab -->
+<<<<<<< HEAD
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <!-- Optimiert die Darstellung auf Mobilgeräten; user-scalable=no verhindert
@@ -17,6 +18,19 @@
     <!-- AR.js: Erweiterung für A-Frame, die GPS-basierte Augmented Reality ermöglicht -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
 
+=======
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- Optimiert die Darstellung auf Mobilgeräten; user-scalable=no verhindert
+         manuelles Zoomen (wichtig für AR-Anwendungen, da Zoom die Kamera stört) -->
+    
+    <!-- A-Frame: JavaScript-Framework für 3D- und VR-Inhalte im Browser -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    
+    <!-- AR.js: Erweiterung für A-Frame, die GPS-basierte Augmented Reality ermöglicht -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+    
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
     <!-- Externe CSS-Datei für Layout, HUD und Button-Stile -->
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -45,10 +59,17 @@
 
     <!-- ===== TIPP-POPUP ===== -->
     <div class="tip-popup" id="tipPopup">
+<<<<<<< HEAD
 
       <!-- Schließen-Button (X) oben rechts im Popup -->
       <button class="close-btn" onclick="hideTip()">&times;</button>
 
+=======
+      
+      <!-- Schließen-Button (X) oben rechts im Popup -->
+      <button class="close-btn" onclick="hideTip()">&times;</button>
+      
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
       <!-- Popup-Kopfzeile mit Glühbirnen-Icon und Titel -->
       <div class="popup-header">
         <svg class="popup-icon" viewBox="0 0 24 24">
@@ -56,7 +77,11 @@
         </svg>
         <h2 class="popup-title">Hilfreiche Tipps</h2>
       </div>
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
       <!-- Tipp-Inhalt: Hinweise auf Fundorte der Dorfbewohner -->
       <div class="popup-content">
         <p>Sucht alle Dorfbewohner! Habt Ihr schon hier nachgeschaut?</p>
@@ -67,6 +92,7 @@
         </ul>
       </div>
     </div>
+<<<<<<< HEAD
 <form id="taskForm" method="POST" action="/php/task5.php">
   <input type="hidden" name="name" id="playerName">
   <input type="hidden" name="code" id="lobbyCode">
@@ -75,16 +101,26 @@
   <input type="hidden" name="usedTip" id="usedTip" value="0">
   <input type="hidden" name="action" value="finish">
 </form>
+=======
+
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
     <!-- ===== HUD (Head-Up-Display) ===== -->
     <!-- Schwebende Bedienelemente über der AR-Szene -->
     <div id="hud">
       <!-- Einsammel-Button: Spieler drückt ihn, wenn er nah genug an einem Modell ist -->
       <button id="collectBtn">Einsammeln</button>
     </div>
+<<<<<<< HEAD
 
     <!-- Timer: zeigt die verstrichene Spielzeit an (Format MM:SS) -->
     <div id="timer" class="hudBox">00:00</div>
 
+=======
+    
+    <!-- Timer: zeigt die verstrichene Spielzeit an (Format MM:SS) -->
+    <div id="timer" class="hudBox">00:00</div>
+    
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
     <!-- Zähler: zeigt eingesammelte / gesamte Dorfbewohner an (z.B. "2 / 3") -->
     <div id="counter" class="hudBox">0 / 3</div>
 
@@ -94,7 +130,11 @@
       <h1>🎉 Alles gefunden!</h1>
       <p>Gut gemacht, du hast die Dorfbewohner zur Flucht verholfen.</p>
       <!-- Neustart-Button: lädt die Seite neu und setzt das Spiel zurück -->
+<<<<<<< HEAD
       <button onclick="submitTask()">Weiter</button>
+=======
+      <button onclick="location.reload()">Weiter</button>
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
     </div>
 
     <!-- ===== A-FRAME AR-SZENE ===== -->
@@ -111,6 +151,7 @@
 
       <!-- ===== 3D-MODELLE MIT GPS-KOORDINATEN ===== -->
       <!-- Jedes Modell erscheint an einem realen GPS-Standort in der AR-Ansicht -->
+<<<<<<< HEAD
 
       <!-- Modell 1: erster Dorfbewohner -->
       <a-entity
@@ -127,15 +168,40 @@
         gps-entity-place="latitude: 48.24572615553973; longitude: 14.327162845442825
 
 "
+=======
+      <!-- Hinweis: Alle drei Modelle haben aktuell dieselben Koordinaten (Testmodus) -->
+      <!-- Die auskommentierte Zeile zeigt die ursprünglich geplanten Koordinaten -->
+
+      <!-- Modell 1: erster Dorfbewohner -->
+      <!-- latitude: 47.99621182328426; longitude: 14.119673288352452 (auskommentiert = Originalstandort) -->
+      <a-entity 
+        id="model1"
+        gps-entity-place="latitude: 48.222205832682114; longitude: 14.24926771655757"
+        gltf-model="models/model1.glb"  <!-- 3D-Modell im GLTF/GLB-Format -->
+        scale="2 2 2"                   <!-- Modell doppelt so groß wie Originalgröße -->
+        animation-mixer>                <!-- Aktiviert enthaltene Animationen -->
+      </a-entity>
+
+      <!-- Modell 2: zweiter Dorfbewohner -->
+      <a-entity 
+        id="model2"
+        gps-entity-place="latitude: 48.222205832682114; longitude: 14.24926771655757"
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
         gltf-model="models/model2.glb"
         scale="2 2 2"
         animation-mixer>
       </a-entity>
 
       <!-- Modell 3: dritter Dorfbewohner -->
+<<<<<<< HEAD
       <a-entity
         id="model3"
         gps-entity-place="latitude: 48.24591762594129; longitude: 14.327251715476187"
+=======
+      <a-entity 
+        id="model3"
+        gps-entity-place="latitude: 48.222205832682114; longitude: 14.24926771655757"
+>>>>>>> 415a5700676278ff19ab2156b3abf897f72613c4
         gltf-model="models/model3.glb"
         scale="2 2 2"
         animation-mixer>
