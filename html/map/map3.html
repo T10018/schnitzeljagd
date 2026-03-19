@@ -1,11 +1,149 @@
-<!-- FABIAN -->
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <button onclick="window.location.href='../speeches/speech_task4_start.html'" style="font-size: 3rem;">Weiter</button><br>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Karte 3 - Pulverkammer </title>
+    <!-- Karte CSS -->
+    <link rel="stylesheet" href="../../style/map.css" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+  <body>
+
+    <!-- Überschrift -->
+    <h1 id="map-title">Karte Ebelsberg 1809</h1>
+
+    <div id="speech">  </div>
+
+    <!-- Kartenbereich -->
+    <div id="map"></div>
+
+    <!-- Weiter-Button -->
+    <button id="next-button" class="button bottom-right"  onclick="window.location.href='../speeches/speech_task4_start.html'">Ziel erreicht! Weiter</button>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      /* --- KONFIGURATION & INITIALISIERUNG --- */
+      
+      // Bereichsgrenzen des Spielfeldes (GEOFENCING) (südwest + nordost)
+      // ACHTUNG: Diese Koordinaten sind die Grenzen für das Spielfeld, nicht die Karte! (Die Karte ist größer, damit man sie besser sehen kann, aber das Spielfeld ist kleiner und die Spieler müssen innerhalb dieses Bereichs bleiben)
+      const playBounds = L.latLngBounds(
+        [48.24359755374813, 14.324905196694772], // Südwest
+        [48.24793531162874, 14.333512031428347], // Nordost
+      );
+
+      // Bereichsgrenzen der Karte 
+      const imageBounds = L.latLngBounds(
+        [48.24051292592235, 14.324905196694772], // Etwas weiter süd-westlich
+        [48.25101993945452, 14.333512031428347]  // Etwas weiter nord-östlich
+      );
+
+      // Exakte Koordinate des Ziels (Pulverkammer)
+      const zielKoordinate = L.latLng(48.24453629216522, 14.33015554960612);
+
+      // Karte initialisieren
+      const map = L.map('map', {
+        maxBounds: playBounds, // Begrenzung auf Spielfeld
+        maxBoundsViscosity: 1.0, // Kein "Durchrutschen" an den Rändern
+        zoomControl: true // Zoom-Buttons aktivieren
+      });
+
+      // Basiskarte von OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        minZoom: 16,
+        maxZoom: 19
+      }).addTo(map);
+
+      map.fitBounds(playBounds);
+      
+      // 1809 Karte als Overlay
+      const overlay = L.imageOverlay(
+        '../../images/mapbig.jpg', // Pfad zu deiner PNG
+        imageBounds,                        // gleiche Bounds wie die Karte
+        {
+          opacity: 1,                // Transparenz (0-1)
+          interactive: false           // nicht anklickbar
+        }
+      ).addTo(map);
+      
+      // Ziel-Marker mit Pulverfass-Icon
+      const pulverIcon = L.icon({
+        iconUrl: '../../icons/barrel.png',
+        iconSize: [25, 25],
+        iconAnchor: [15, 20]
+      });
+      L.marker(zielKoordinate, { icon: pulverIcon }).addTo(map);
+
+      /* --- GPS LOGIK --- */
+
+      let locationMarker = null; // Marker für die aktuelle Position des Spielers
+      let hasValidPosition = false; // Flag, ob eine gültige Position vorliegt (für Button-Aktivierung)
+      let hasAlertedOutOfBounds = false; // Flag für Bounds-Alert
+
+      // Funktion zur Überprüfung der aktuellen Position (speichert position in userLatLng, setzt Marker, prüft Bounds und Zielerreichung)
+      function checkPosition(position) {
+        const userLatLng = L.latLng(position.coords.latitude, position.coords.longitude); // Aktuelle Position des Spielers als LatLng-Objekt
+        const distance = userLatLng.distanceTo(zielKoordinate); // Entfernung zum Ziel in Metern
+
+        // Standortmarker setzen oder aktualisieren
+        if (!locationMarker) {
+          const myIcon = L.divIcon({ className: 'my-location' });
+          locationMarker = L.marker(userLatLng, { icon: myIcon }).addTo(map);
+        } else {
+          locationMarker.setLatLng(userLatLng);
+        }
+
+        hasValidPosition = true;
+
+        // außerhalb der Bounds -> nur einmal Alert pro Verlassen
+        if (!bounds.contains(userLatLng) && !hasAlertedOutOfBounds) {
+          alert("⚠️ Du bist außerhalb des Spielfelds!");
+          hasAlertedOutOfBounds = true;
+        }
+        // Wenn wieder innerhalb -> Flag zurücksetzen
+        if (bounds.contains(userLatLng)) {
+          hasAlertedOutOfBounds = false;
+        }
+
+        // Zielprüfung
+        // Wenn innerhalb von 10 Metern zum Ziel -> Button anzeigen und Text anpassen, sonst Button verstecken und Anweisung anzeigen
+        if (distance < 10) {
+          document.getElementById('next-button').style.display = 'block';
+          document.getElementById('speech').innerText =
+            "Sehr gut! Du bist bei der Pulverkammer angekommen!";
+        } else {
+          document.getElementById('next-button').style.display = 'none';
+          document.getElementById('speech').innerText = "Bewege dich zur Pulverkammer";
+        }
+      }
+
+      // Funktion für GPS-Fehler (z.B. Standort nicht aktiviert, Timeout, etc.)
+      function errorPosition(err) {
+        hasValidPosition = false;
+        document.getElementById('next-button').style.display = 'none';
+        document.getElementById('speech').innerText =
+          "⚠️ GPS-Fehler: " + err.message + " – Bitte Standort aktivieren.";
+      }
+
+      // Geolocation starten (watchPosition für kontinuierliche Updates, errorPosition für Fehlerbehandlung, Optionen für Genauigkeit und Timeout)
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(checkPosition, errorPosition,
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+        );
+      } else {
+        alert("GPS wird nicht unterstützt.");
+      }
+
+      // Button blockieren, wenn GPS nicht aktiv
+      document.getElementById('next-button').addEventListener('click', function (e) {
+        if (!hasValidPosition) {
+          e.preventDefault();
+          alert("Du musst zuerst deinen Standort aktivieren, um fortzufahren!");
+        }
+      });
+    </script>
+  </body>
 </html>
