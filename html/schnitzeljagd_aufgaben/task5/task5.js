@@ -51,21 +51,13 @@ collectBtn.addEventListener('click', () => {
 // ===== ENTFERNUNGSBERECHNUNG (Haversine-Formel) =====
 // Berechnet die Luftliniendistanz zwischen zwei GPS-Koordinaten in Metern
 function getDistance(lat1, lon1, lat2, lon2) {
-  // Hilfsfunktion: Grad in Bogenmaß (Radiant) umrechnen
-  function toRad(x) {
-    return x * Math.PI / 180;
-  }
+  const metersPerDegLat = 111320;                        // 1° Breitengrad ≈ 111.320 m (konstant)
+  const metersPerDegLon = 111320 * Math.cos(lat1 * Math.PI / 180); // 1° Längengrad ≈ variiert je nach Breitengrad
 
-  const R = 6371e3;                    // Erdradius in Metern (6.371.000 m)
-  const φ1 = toRad(lat1), φ2 = toRad(lat2); // Breitengrade in Radiant
-  const Δφ = toRad(lat2 - lat1);      // Differenz der Breitengrade
-  const Δλ = toRad(lon2 - lon1);      // Differenz der Längengrade
+  const dx = (lon2 - lon1) * metersPerDegLon;  // Ost-West-Abstand in Metern
+  const dy = (lat2 - lat1) * metersPerDegLat;  // Nord-Süd-Abstand in Metern
 
-  // Haversine-Formel: berechnet den Zwischenwert 'a' für die Kugelgeometrie
-  const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
-  
-  // Endergebnis: Entfernung in Metern über den großen Kreisbogen
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.sqrt(dx * dx + dy * dy);          // Pythagoras
 }
 
 // ===== TIMER =====
