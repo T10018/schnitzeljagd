@@ -48,7 +48,6 @@ collectBtn.addEventListener('click', () => {
   });
 });
 
-// ===== ENTFERNUNGSBERECHNUNG (Haversine-Formel) =====
 // Berechnet die Luftliniendistanz zwischen zwei GPS-Koordinaten in Metern
 function getDistance(lat1, lon1, lat2, lon2) {
   const metersPerDegLat = 111320;                        // 1° Breitengrad ≈ 111.320 m (konstant)
