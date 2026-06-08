@@ -1,7 +1,7 @@
 // ===== ELEMENT-REFERENZEN =====
 const collectBtn = document.getElementById('collectBtn');   // Einsammel-Button
 const counterText = document.getElementById('counter');     // Zähler-Anzeige (z.B. "2 / 3")
-let collected = 0; // Anzahl der bisher eingesammelten Modelle (startet bei 0)
+let collected = 2; // Anzahl der bisher eingesammelten Modelle (startet bei 0)
 const total = 3;   // Gesamtzahl der zu findenden Dorfbewohner
 
 // ===== MODELL-KONFIGURATION =====
